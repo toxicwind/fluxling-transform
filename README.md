@@ -218,3 +218,24 @@ mkdocs serve
 - [AI Agent Toolbox](https://github.com/255BITS/ai-agent-toolbox) — powers Patchling's tool-call parsing across models
 
 MIT licensed. Built by [255labs](https://255labs.xyz).
+
+## Offline mutation backend (no LLM required)
+
+`patchling.mutate` generates unified diffs from deterministic, rule-based
+source transforms — no API key, no network. Built for synthetic streams,
+demos and tests (it powers codeflux's demo mode), and gives patchling a
+fully offline mode. Deterministic given `(rule, seed)`.
+
+```python
+from patchling.mutate import mutate_diff, mutate_stream
+
+goal, diff = mutate_diff({"app.py": "def hello():\n    pass\n"}, seed=3)
+print(goal)  # e.g. "Add docstring to first function"
+
+for step in mutate_stream(files, n=5, seed=3):
+    print(step["goal"], "->", step["path"])
+```
+
+Available rules: `rename_function`, `add_docstring`, `insert_logging`,
+`bump_constant`, `add_function`. Combine with `smartapply` (which needs no
+key either) for a complete offline transform loop.
