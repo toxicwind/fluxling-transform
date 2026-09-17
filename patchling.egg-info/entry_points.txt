@@ -1,0 +1,5 @@
+[console_scripts]
+gptdiff = patchling.core:main
+gptpatch = patchling.gptpatch:main
+patchling = patchling.core:main
+patchling-apply = patchling.gptpatch:main
