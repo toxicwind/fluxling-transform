@@ -1,8 +1,22 @@
+<div align="right">
+
+[![repo](https://img.shields.io/badge/github-toxicwind%2Fcodeflux--patchling-181717.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/toxicwind/codeflux-patchling)
+[![pypi](https://img.shields.io/badge/pypi-patchling-3775A9.svg?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/patchling/)
+[![version](https://img.shields.io/badge/version-0.8.1-blue.svg?style=for-the-badge)](https://github.com/toxicwind/codeflux-patchling)
+[![license](https://img.shields.io/badge/license-public%20domain-green.svg?style=for-the-badge)](https://github.com/toxicwind/codeflux-patchling/blob/main/LICENSE.txt)
+[![codeflux](https://img.shields.io/badge/codeflux-family%20member-00ADD8.svg?style=for-the-badge)](https://github.com/toxicwind/codeflux)
+
+</div>
+
 # Patchling
+
+### Natural-language code transformation, as a library.
 
 > _Formerly **gptdiff**. Same library, same API — `pip install patchling` (the `gptdiff` package still resolves during the transition)._
 
-**Natural-language code transformation, as a library.** Hand Patchling a dict of files and a plain-English goal; get back a unified diff — and, via `smartapply`, the transformed files. It's a bounded primitive you embed inside your own software systems, not an open-ended coding agent.
+Hand Patchling a dict of files and a plain-English goal; get back a unified diff — and, via `smartapply`, the transformed files. **It's a bounded primitive you embed inside your own software systems, not an open-ended coding agent.** Files in, files out. No filesystem access required, no agent harness.
+
+> 🧬 **toxicwind fork** — our working fork of [255BITS/patchling-py](https://github.com/255BITS/patchling-py), adding **`patchling.mutate`**: an offline, deterministic, rule-based mutation backend — no API key, no network. It powers [codeflux](https://github.com/toxicwind/codeflux)'s demo mode and gives Patchling a fully offline transform loop.
 
 ```python
 from patchling import generate_diff, smartapply, build_environment
@@ -15,52 +29,53 @@ updated = smartapply(diff, files)
 print(updated["main.py"])
 ```
 
-Files in, files out. No filesystem access required, no agent harness. The hard part — applying an LLM-generated diff that `git apply` would reject — is what `smartapply` solves: per-file, AI-assisted patch resolution that survives fuzzy hunks, renames, new files, and deletions.
+The hard part — applying an LLM-generated diff that `git apply` would reject — is what `smartapply` solves: per-file, AI-assisted patch resolution that survives fuzzy hunks, renames, new files, and deletions.
 
-🌐 Project home: [patchling.app](https://patchling.app) — try it live in your browser · 📚 Full documentation at [255bits.github.io/patchling-py](https://255bits.github.io/patchling-py)
-
-Prefer the browser? The same primitive ships on npm as **[patchling for JS](https://github.com/255BITS/patchling)**
-(`generateDiff` + `smartapply`, zero-dependency ESM) — try the **[live demos →](https://255bits.github.io/patchling-examples/)**.
+🌐 Project home: [patchling.app](https://patchling.app) — try it live in your browser · 📚 Full docs: [255bits.github.io/patchling-py](https://255bits.github.io/patchling-py)
 
 ---
 
-## The Patchling family
+## ✨ Features
 
-The same primitive exists for every runtime, and it powers a real product:
-
-| Project | What it is |
-|---------|------------|
-| **patchling for Python** (this repo) | Python library + CLI tools — [PyPI](https://pypi.org/project/patchling/) |
-| **[patchling for JS](https://github.com/255BITS/patchling)** | Zero-dependency ESM package for browser and Node — `generateDiff` + `smartapply` on in-memory file maps — [npm](https://www.npmjs.com/package/patchling) |
-| **[patchling.app](https://patchling.app)** | Project homepage with a live in-browser demo of the whole diff → smartapply loop |
-| **[nanoodle.com](https://nanoodle.com)** | Visual AI workflow editor built on patchling — no server, no signup, bring your own key. See the primitive working in production |
-| **[Live demos](https://255bits.github.io/patchling-examples/)** | Browser examples: LLM-edited games, 3D scenes, stream overlays, AI characters |
-
-Building for the browser? Start with [patchling for JS](https://github.com/255BITS/patchling). Building a Python backend, pipeline, or your own agent? You're in the right repo.
+- **`generate_diff`** — plain-English goal → unified diff over an in-memory file map
+- **`smartapply`** — AI-assisted patch application that survives what `git apply` rejects (fuzzy hunks, renames, new files, deletions)
+- **`patchling.mutate`** *(fork addition)* — deterministic rule-based transforms with zero API cost: `rename_function`, `add_docstring`, `insert_logging`, `bump_constant`, `add_function`. Reproducible given `(rule, seed)`
+- **Bounded primitive** — one goal → one diff. Composes into agent loops without an agent harness
+- **Git-native CLI** — changes arrive as diffs: review with `git diff`, keep with `git add -p`, discard with `git checkout .`
+- **Any OpenAI-compatible endpoint** — bring your own key or your own provider
 
 ---
 
-## Quick Start
+## 🧬 Offline mode: `patchling.mutate`
 
-### 1. Install
+```python
+from patchling.mutate import mutate_diff, mutate_stream
+
+goal, diff = mutate_diff({"app.py": "def hello():\n    pass\n"}, seed=3)
+print(goal)  # e.g. "Add docstring to first function"
+
+for step in mutate_stream(files, n=5, seed=3):
+    print(step["goal"], "->", step["path"])
+```
+
+Combine with `smartapply` (which needs no key either) for a complete offline transform loop — this is what [codeflux](https://github.com/toxicwind/codeflux) runs in demo mode to generate synthetic patch streams.
+
+---
+
+## 🚀 Quick start
 
 ```bash
+# 1. install
 pip install patchling
+
+# 2. set your API key (any OpenAI-compatible endpoint)
+export GPTDIFF_LLM_API_KEY=<your-key>   # or point GPTDIFF_LLM_BASE_URL at your own provider
+
+# 3. transform files in your code
+patchling "Add type hints to all functions" --apply
 ```
 
-### 2. Set your API key
-
-Works with any OpenAI-compatible endpoint. Get a key at [nano-gpt.com/api](https://nano-gpt.com/api), or point `GPTDIFF_LLM_BASE_URL` at your own provider.
-
-```bash
-# Linux/macOS
-export GPTDIFF_LLM_API_KEY='your-api-key'
-
-# Windows
-set GPTDIFF_LLM_API_KEY=your-api-key
-```
-
-### 3. Transform files in your code
+Or in Python:
 
 ```python
 from patchling import generate_diff, smartapply, build_environment
@@ -77,46 +92,40 @@ diff = generate_diff(
 files = smartapply(diff, files)
 ```
 
-The diff is plain unified-diff text — log it, review it, gate it behind approval, or apply it immediately. That's the point: your system stays in control of what changes and when.
+The diff is plain unified-diff text — log it, review it, gate it behind approval, or apply it immediately. That's the point: **your system stays in control of what changes and when.**
 
 See [examples/usage_example.py](examples/usage_example.py) for a runnable version.
 
 ---
 
-## Core API
+## 🔧 Architecture
 
-- `generate_diff(environment: str, goal: str, model: str = ...) -> str` — generates a unified diff implementing the goal. `model` defaults to the `GPTDIFF_MODEL` env var.
-- `smartapply(diff_text: str, files: dict[str, str], model: str = ...) -> dict[str, str]` — applies a diff with AI-powered conflict resolution. Handles new files, deletions, and hunks that standard patching rejects. Returns a new dict; input is not mutated.
-- `build_environment(files: dict[str, str]) -> str` — serializes a files dict into the environment string `generate_diff` expects.
-- `load_project_files(path, cwd) -> dict` / `save_files(files, base_dir)` — optional filesystem helpers for when you *do* want to read/write a real project (respects `.gitignore` and `.gptignore`).
-
-Full signatures, error handling, and edge cases: [API Reference](https://255bits.github.io/patchling-py/api).
-
-**Pipeline example** — sequential transformations over an in-memory codebase:
-
-```python
-from patchling import generate_diff, smartapply, build_environment
-
-files = load_your_codebase()  # dict of {path: content}
-
-for task in [
-    "Add python type annotations",
-    "Convert string formatting to f-strings",
-    "Update deprecated API calls",
-]:
-    files = smartapply(generate_diff(build_environment(files), task), files)
+```mermaid
+flowchart LR
+    F["📁 files dict<br/>in-memory codebase"] --> E["🧱 build_environment<br/>serialize to env string"]
+    E --> G["🤖 generate_diff<br/>LLM or mutate backend"]
+    G --> D["📄 unified diff<br/>plain text, reviewable"]
+    D --> S["🧠 smartapply<br/>AI-assisted apply"]
+    S --> F2["📁 updated files dict<br/>input never mutated"]
 ```
 
-This is the pattern [nanoodle.com](https://nanoodle.com) runs in the browser (via [patchling](https://github.com/255BITS/patchling)): each workflow node is a bounded diff→apply step over an in-memory file map, and the app never touches a server.
+### Core API
 
----
+| Function | What it does |
+|---|---|
+| `generate_diff(environment, goal, model=...)` | unified diff implementing the goal; `model` defaults to `GPTDIFF_MODEL` |
+| `smartapply(diff_text, files, model=...)` | applies a diff with AI conflict resolution; returns a new dict, input untouched |
+| `build_environment(files)` | serializes a files dict into the environment string `generate_diff` expects |
+| `load_project_files(path, cwd)` / `save_files(files, base_dir)` | optional filesystem helpers (respect `.gitignore` / `.gptignore`) |
 
-## Choosing a Model
+Full signatures and edge cases: [API Reference](https://255bits.github.io/patchling-py/api).
 
-**Reasoning models** produce more accurate diffs for complex changes; **fast models** win for applying diffs and simple edits.
+### Choosing a model
+
+Reasoning models produce more accurate diffs for complex changes; fast models win for applying diffs and simple edits.
 
 | Model | Best for | Notes |
-|-------|----------|-------|
+|---|---|---|
 | `gemini-3-pro-preview` | Generating diffs | **Recommended default** |
 | `gpt-4o` / `claude-sonnet-4-20250514` | Complex or context-sensitive changes | Slower, more careful |
 | `gpt5-mini` | Applying diffs (`smartapply`) | Fast and reliable — best `GPTDIFF_SMARTAPPLY_MODEL` |
@@ -127,59 +136,41 @@ export GPTDIFF_MODEL='gemini-3-pro-preview'
 export GPTDIFF_SMARTAPPLY_MODEL='gpt5-mini'
 ```
 
-### Environment variables
+---
+
+## ⚙️ Config
 
 | Variable | Purpose | Default |
-|----------|---------|---------|
+|---|---|---|
 | `GPTDIFF_LLM_API_KEY` | API key (required) | — |
 | `GPTDIFF_MODEL` | Model for diff generation | `gemini-3-pro-preview` |
 | `GPTDIFF_SMARTAPPLY_MODEL` | Model for applying diffs | `GPTDIFF_MODEL` |
 | `GPTDIFF_LLM_BASE_URL` | OpenAI-compatible endpoint | `https://nano-gpt.com/api/v1/` |
 
----
+Get a key at [nano-gpt.com/api](https://nano-gpt.com/api), or self-host. Optional services: none required — `patchling.mutate` + `smartapply` run fully offline.
 
-## Command-Line Tools
+### Command-line tools
 
-The library also ships two CLIs for working on a real project directory.
-
-> The former command names **`gptdiff`** and **`gptpatch`** still work as aliases for `patchling` and `patchling-apply`, so existing scripts don't break.
-
-### patchling
-
-Describe a change; Patchling scans the project (respecting `.gitignore`/`.gptignore`), generates a diff, and optionally applies it:
+> The former names **`gptdiff`** and **`gptpatch`** still work as aliases for `patchling` and `patchling-apply`.
 
 | Command | What it does |
-|---------|--------------|
-| `patchling "prompt"` | Writes `prompt.txt` only — preview what would be sent |
-| `patchling "prompt" --call` | Generates the diff into `diff.patch` for review |
-| `patchling "prompt" --apply` | Generates and applies in one step |
+|---|---|
+| `patchling "prompt"` | writes `prompt.txt` only — preview what would be sent |
+| `patchling "prompt" --call` | generates the diff into `diff.patch` for review |
+| `patchling "prompt" --apply` | generates and applies in one step |
+| `patchling-apply path/to/diff.patch` | applies a diff — standard logic first, `smartapply` fallback |
 
 ```bash
 cd your-project
 patchling "Add type hints to all functions" --apply
-
-# Target specific paths
-patchling "Add logging" src/api/ src/utils/helpers.py
+patchling "Add logging" src/api/ src/utils/helpers.py   # target specific paths
 ```
 
-Useful flags: `--model`, `--temperature`, `--prepend <file>` (custom instructions), `--image <path>` (visual context), `--nobeep`. Full list: [CLI Reference](https://255bits.github.io/patchling-py/cli).
-
-Because changes arrive as diffs, the CLI is git-native: review with `git diff`, keep with `git add -p`, discard with `git checkout .`.
-
-### patchling-apply
-
-Applies an existing unified diff to a project — standard patch logic first, `smartapply` fallback when that fails:
-
-```bash
-patchling-apply path/to/diff.patch
-patchling-apply --diff "<diff text>"
-```
-
-Options: `--project-dir`, `--model`, `--max_tokens`, `--nobeep`. Details: [patchling-apply docs](https://255bits.github.io/patchling-py/patchling-apply).
+Flags: `--model`, `--temperature`, `--prepend <file>`, `--image <path>`, `--nobeep`. Full list: [CLI Reference](https://255bits.github.io/patchling-py/cli).
 
 ### Agent loops
 
-Because each invocation is bounded (one goal → one diff), the CLI composes into loops:
+Each invocation is bounded (one goal → one diff), so the CLI composes into loops:
 
 ```bash
 while true; do
@@ -193,49 +184,33 @@ One overnight test-coverage loop took a project from 18 to 127 test cases. Recip
 
 ---
 
-## Testing
+## 🛠️ Dev
 
 ```bash
 pip install -e .[test]
 pytest tests/
 ```
 
-## Documentation
+Docs live at [255bits.github.io/patchling-py](https://255bits.github.io/patchling-py); preview locally with `pip install .[docs] && mkdocs serve`. Contributions welcome — this fork's `mutate` backend is the codeflux-facing surface, so keep it deterministic and key-free.
 
-Docs live at [255bits.github.io/patchling-py](https://255bits.github.io/patchling-py). To preview locally:
+---
 
-```bash
-pip install .[docs]
-mkdocs serve
-```
+## 🧬 The codeflux family
 
-## Related projects
+| Repo | Role |
+|---|---|
+| [**codeflux**](https://github.com/toxicwind/codeflux) | the live streaming pipeline |
+| [**codeflux-moulti**](https://github.com/toxicwind/codeflux-moulti) | TUI steps + `stream` subcommand |
+| [**codeflux-patchling**](https://github.com/toxicwind/codeflux-patchling) | deterministic mutation backend (this repo) |
+| [**codeflux-python-patch**](https://github.com/toxicwind/codeflux-python-patch) | hunks-as-data + apply reports |
+| [**codeflux-watchfiles**](https://github.com/toxicwind/codeflux-watchfiles) | structured file events |
 
-- [patchling.app](https://patchling.app) — project home, with a live in-browser demo
-- [patchling for JS](https://github.com/255BITS/patchling) — the browser/Node package on [npm](https://www.npmjs.com/package/patchling)
-- [nanoodle.com](https://nanoodle.com) — visual AI workflow editor built on patchling
-- [patchling live demos](https://255bits.github.io/patchling-examples/)
-- [AI Agent Toolbox](https://github.com/255BITS/ai-agent-toolbox) — powers Patchling's tool-call parsing across models
+Related: [patchling.app](https://patchling.app) · [patchling for JS](https://github.com/255BITS/patchling) ([npm](https://www.npmjs.com/package/patchling)) · [nanoodle.com](https://nanoodle.com) · [live demos](https://255bits.github.io/patchling-examples/) · [AI Agent Toolbox](https://github.com/255BITS/ai-agent-toolbox)
 
-MIT licensed. Built by [255labs](https://255labs.xyz).
+---
 
-## Offline mutation backend (no LLM required)
+## 📄 License & security
 
-`patchling.mutate` generates unified diffs from deterministic, rule-based
-source transforms — no API key, no network. Built for synthetic streams,
-demos and tests (it powers codeflux's demo mode), and gives patchling a
-fully offline mode. Deterministic given `(rule, seed)`.
+**License:** public domain — this is free and unencumbered software released into the public domain. See [LICENSE.txt](LICENSE.txt). Built by [255labs](https://255labs.xyz).
 
-```python
-from patchling.mutate import mutate_diff, mutate_stream
-
-goal, diff = mutate_diff({"app.py": "def hello():\n    pass\n"}, seed=3)
-print(goal)  # e.g. "Add docstring to first function"
-
-for step in mutate_stream(files, n=5, seed=3):
-    print(step["goal"], "->", step["path"])
-```
-
-Available rules: `rename_function`, `add_docstring`, `insert_logging`,
-`bump_constant`, `add_function`. Combine with `smartapply` (which needs no
-key either) for a complete offline transform loop.
+**Security:** never commit `GPTDIFF_LLM_API_KEY` — use env vars or a secrets manager. Report vulnerabilities privately via GitHub Security Advisories on this repo.
