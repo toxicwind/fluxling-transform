@@ -16,7 +16,7 @@
 
 Hand Patchling a dict of files and a plain-English goal; get back a unified diff — and, via `smartapply`, the transformed files. **It's a bounded primitive you embed inside your own software systems, not an open-ended coding agent.** Files in, files out. No filesystem access required, no agent harness.
 
-> 🧬 **toxicwind fork** — our working fork of [255BITS/patchling-py](https://github.com/255BITS/patchling-py), adding **`patchling.mutate`**: an offline, deterministic, rule-based mutation backend — no API key, no network. It powers [codeflux](https://github.com/toxicwind/codeflux)'s demo mode and gives Patchling a fully offline transform loop.
+Adds **`patchling.mutate`**: an offline, deterministic, rule-based mutation backend — no API key, no network. It powers [codeflux](https://github.com/toxicwind/codeflux)'s demo mode and gives Patchling a fully offline transform loop.
 
 ```python
 from patchling import generate_diff, smartapply, build_environment
@@ -214,3 +214,7 @@ Related: [patchling.app](https://patchling.app) · [patchling for JS](https://gi
 **License:** public domain — this is free and unencumbered software released into the public domain. See [LICENSE.txt](LICENSE.txt). Built by [255labs](https://255labs.xyz).
 
 **Security:** never commit `GPTDIFF_LLM_API_KEY` — use env vars or a secrets manager. Report vulnerabilities privately via GitHub Security Advisories on this repo.
+
+---
+
+> originally [255BITS/patchling-py](https://github.com/255BITS/patchling-py) by 255labs — public domain. this fork exists because codeflux needs an offline, deterministic mutation backend (`patchling.mutate`) without any network dependency.
