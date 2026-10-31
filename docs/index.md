@@ -24,6 +24,7 @@ Honest delta (audited against upstream `main`):
 | Mutation backend | LLM-backed only | **adds `patchling.mutate`** — deterministic, rule-based, offline, byte-reproducible on `(rule, seed)`; no API key, no network |
 | Module import | eager (40+ public symbols) | lazy 5-symbol API so `import patchling.mutate` is zero-dependency |
 | Apply engine | fuzzy machinery: context anchors, identifier maps, fenced-block extraction, `UnsafePathError` path guard | deliberate split: strict hunk applier on disk, **fuzziness lives in `smartapply`'s per-file LLM resolution**; fork re-added a path-traversal guard (`UnsafePathError`) the simplified applier had lost |
+| Path guard policy | always-on | guarded by default, **disableable** per call (`apply_diff(..., allow_unsafe_paths=True)`) or env (`GPTDIFF_ALLOW_UNSAFE_PATHS=1`) |
 | Tests | large suite incl. relevance/parity fixtures | lean suite focused on CLI + smartapply + mutate |
 | Purpose | general-purpose library | deterministic mutation backend of the [codeflux](https://github.com/toxicwind/codeflux) family |
 
