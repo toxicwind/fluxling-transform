@@ -34,6 +34,7 @@ setup(
             # Back-compat aliases (former names — keep existing scripts working)
             'gptdiff=patchling.core:main',
             'gptpatch=patchling.gptpatch:main',
+            'patchling-workflow=patchling.workflows:main',
         ],
     },
     license=None, # Remove license argument
