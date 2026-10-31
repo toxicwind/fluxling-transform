@@ -628,7 +628,7 @@ def smartapply(diff_text, files, model=None, api_key=None, base_url=None):
     return files
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Generate and optionally apply git diffs using GPT-4.')
+    parser = argparse.ArgumentParser(description='Natural-language code transformation: generate and optionally apply unified diffs.')
     parser.add_argument('prompt', type=str, help='Prompt that runs on the codebase.')
     parser.add_argument('--apply', action='store_true', help='Attempt to apply the generated git diff. Uses smartapply if applying the patch fails.')
     parser.add_argument('--prepend', type=str, default=None, help='Path to content prepended to system prompt')
