@@ -3,3 +3,4 @@ gptdiff = patchling.core:main
 gptpatch = patchling.gptpatch:main
 patchling = patchling.core:main
 patchling-apply = patchling.gptpatch:main
+patchling-workflow = patchling.workflows:main

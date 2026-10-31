@@ -6,12 +6,14 @@ patchling/applydiff.py
 patchling/core.py
 patchling/gptpatch.py
 patchling/mutate.py
+patchling/workflows.py
 patchling.egg-info/PKG-INFO
 patchling.egg-info/SOURCES.txt
 patchling.egg-info/dependency_links.txt
 patchling.egg-info/entry_points.txt
 patchling.egg-info/requires.txt
 patchling.egg-info/top_level.txt
+tests/test_apply_path_guard.py
 tests/test_applydiff.py
 tests/test_applydiff_edgecases.py
 tests/test_diff_parse.py
@@ -19,5 +21,7 @@ tests/test_failing_case.py
 tests/test_multidiff.py
 tests/test_parse_diff_per_file.py
 tests/test_smartapply.py
+tests/test_smartapply_path_rescue.py
 tests/test_strip_bad_ouput.py
 tests/test_swallow_reasoning.py
+tests/test_workflows.py
