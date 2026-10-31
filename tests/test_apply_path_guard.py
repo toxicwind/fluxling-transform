@@ -1,6 +1,6 @@
 """Path-traversal guard tests (audit 2026-10-31: fork had lost UnsafePathError; re-added, disableable)."""
 import os
-from patchling.applydiff import apply_diff
+from fluxling.applydiff import apply_diff
 
 
 def _evil(levels):
