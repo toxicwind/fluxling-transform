@@ -577,14 +577,17 @@ def smartapply(diff_text, files, model=None, api_key=None, base_url=None):
                 return f
         # content match: the diff's removal/context lines should appear in
         # exactly one candidate file (LLM header paths are often garbage)
-        removals = [l[1:].strip() for l in patch.splitlines()
-                    if l.startswith('-') and not l.startswith('--- ')]
-        removals = [r for r in removals if r]
-        if removals:
-            scored = [(f, sum(1 for r in removals if r in files[f])) for f in files]
-            best, score = max(scored, key=lambda x: x[1])
-            if score > 0:
-                return best
+        # signal lines: removals AND context (pure-addition diffs have no
+        # removals; their context lines are the only fingerprint)
+        signal = [l[1:].strip() for l in patch.splitlines()
+                  if l.startswith(('-', ' ')) and not l.startswith(('--- ', '+++ '))]
+        signal = [s for s in signal if s and len(s) > 3]
+        if signal and files:
+            scored = [(f, sum(1 for s in signal if s in files[f])) for f in files]
+            if scored:
+                best, score = max(scored, key=lambda x: x[1])
+                if score > 0:
+                    return best
         return None
 
     resolved = []
