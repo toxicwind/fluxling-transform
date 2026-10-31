@@ -15,35 +15,19 @@ Hand Patchling a dict of files and a plain-English goal; get back a unified diff
 
 ## 🧬 This fork vs upstream
 
-**Credit first:** Patchling is [255BITS/patchling-py](https://github.com/255BITS/patchling-py) by [255labs](https://255labs.xyz), released into the public domain — this fork exists because they built the hard parts. `pip install patchling` still resolves to it during the transition.
+**Credit first:** Patchling is [255BITS/patchling-py](https://github.com/255BITS/patchling-py) by [255labs](https://255labs.xyz), released into the public domain — this fork exists because they built the hard parts.
 
-What **this fork** changes, and why:
+Honest delta (audited against upstream `main`):
 
-| | upstream | this fork |
+| | upstream (`0.9.x`) | this fork (`0.8.x`) |
 |---|---|---|
-| Backend | LLM-backed `generate_diff` / `smartapply` | same core, **plus `patchling.mutate`** — deterministic, rule-based, offline, seed-reproducible |
-| `relevance.py` | 1,431-line context-selection subsystem | trimmed — codeflux feeds it curated files itself |
-| Packaging | `pyproject.toml` | `setup.py` |
-| Purpose | general-purpose library | the **deterministic mutation backend of the [codeflux](https://github.com/toxicwind/codeflux) family**: demo streams, synthetic patch data, zero API cost |
+| Mutation backend | LLM-backed only | **adds `patchling.mutate`** — deterministic, rule-based, offline, byte-reproducible on `(rule, seed)`; no API key, no network |
+| Module import | eager (40+ public symbols) | lazy 5-symbol API so `import patchling.mutate` is zero-dependency |
+| Apply engine | fuzzy machinery: context anchors, identifier maps, fenced-block extraction, `UnsafePathError` path guard | deliberate split: strict hunk applier on disk, **fuzziness lives in `smartapply`'s per-file LLM resolution**; fork re-added a path-traversal guard (`UnsafePathError`) the simplified applier had lost |
+| Tests | large suite incl. relevance/parity fixtures | lean suite focused on CLI + smartapply + mutate |
+| Purpose | general-purpose library | deterministic mutation backend of the [codeflux](https://github.com/toxicwind/codeflux) family |
 
-The mutate rules: `rename_function`, `add_docstring`, `insert_logging`, `bump_constant`, `add_function` — given `(rule, seed)` they are byte-reproducible, which is the property the codeflux pipeline needs. Upstream stays the place for the full-fat library; this fork stays lean and key-free.
-```python
-from patchling import generate_diff, smartapply, build_environment
-
-files = {"main.py": "def old_name():\n    print('Need renaming')\n"}
-
-diff = generate_diff(build_environment(files), "Rename old_name to new_name")
-updated = smartapply(diff, files)
-
-print(updated["main.py"])
-```
-
-The hard part — applying an LLM-generated diff that `git apply` would reject — is what `smartapply` solves: per-file, AI-assisted patch resolution that survives fuzzy hunks, renames, new files, and deletions.
-
-🌐 Project home: [patchling.app](https://patchling.app) — try it live in your browser · 📚 Full docs: this site
-
----
-
+Upstream stays the place for the full-fat library; this fork stays lean and key-free.
 ## ✨ Features
 
 - **`generate_diff`** — plain-English goal → unified diff over an in-memory file map
