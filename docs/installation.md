@@ -19,7 +19,7 @@ pip install tiktoken  # For token counting
 If the `patchling` package is not yet available on PyPI, you can install it from the source code:
 
 ```bash
-git clone https://github.com/255BITS/patchling-py.git
+git clone https://github.com/toxicwind/codeflux-patchling.git
 cd patchling
 python setup.py install
 ```

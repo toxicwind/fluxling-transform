@@ -1,136 +1,59 @@
-# Patchling Documentation
+# Patchling
 
-**Natural-language code transformation, as a library.** Patchling turns a plain-English goal plus a dict of files into a unified diff, then applies it resiliently with `smartapply`. It's a bounded primitive for embedding in your own software systems — pipelines, backends, products — not an open-ended coding agent.
+<div align="right">
+
+[![repo](https://img.shields.io/badge/github-toxicwind%2Fcodeflux--patchling-181717.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/toxicwind/codeflux-patchling)
+[![pypi](https://img.shields.io/badge/pypi-patchling-3775A9.svg?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/patchling/)
+[![version](https://img.shields.io/badge/version-0.8.1-2081C7.svg?style=for-the-badge)](https://pypi.org/project/patchling/)
+
+</div>
+
+**Natural-language code transformation as a library.** Hand Patchling a project, a
+plain-English goal, and a dict of files — get back a unified diff. Apply it with
+`smartapply` and get the transformed files.
 
 ```python
-from patchling import generate_diff, smartapply, build_environment
+import patchling
 
-files = {"main.py": "def old_name():\n    print('Need renaming')\n"}
-
-diff = generate_diff(build_environment(files), "Rename old_name to new_name")
-updated = smartapply(diff, files)
+diff = patchling.generate_diff(
+    files,                       # {"src/app.py": "...", ...}
+    "rename `fetch_data` to `load_data` and add a cache",
+)
+result = patchling.smartapply(project_dir, diff)   # -> transformed files
 ```
 
-Files in, files out — no filesystem required. The diff is plain text you can log, review, or gate before applying, so your system stays in control.
+## What's in the box
 
----
+| Surface | What it does |
+|---|---|
+| `patchling.generate_diff(files, goal)` | LLM-backed natural-language → unified diff |
+| `patchling.smartapply(project_dir, diff)` | Applies a diff, returns transformed files |
+| `patchling-apply` (CLI) | Applies unified diffs to a project directory |
+| `patchling` (CLI) | Interactive LLM-backed patching session |
+| `patchling.mutate_diff / mutate_stream` | **Offline, zero-dependency** dataset mutation — rename functions, add docstrings/logging, bump constants, synthesize variants with a seed |
+| `patchling.color_code_diff(diff)` | Terminal-colorized diff rendering |
+| `agents/fix-test-agent.py` | Example agent loop built on the toolbox |
 
-## The Patchling family
+## Why it's different
 
-| Project | What it is |
-|---------|------------|
-| **patchling** (these docs) | Python library + CLI tools — [PyPI](https://pypi.org/project/patchling/) · [GitHub](https://github.com/255BITS/patchling-py) |
-| **[patchling](https://github.com/255BITS/patchling)** | Zero-dependency ESM port for browser and Node — same `generateDiff` + `smartapply` primitive |
-| **[nanoodle.com](https://nanoodle.com)** | Visual AI workflow editor built on patchling — no server, no signup, bring your own key. The primitive, live in production |
-| **[Live demos](https://255bits.github.io/patchling-examples/)** | Browser examples: LLM-edited games, 3D scenes, overlays, AI characters |
+Patchling is a **bounded primitive**, not a framework: no IDE plugin, no daemon,
+no magic. Two pure functions plus a diff applier you can embed in your own agent
+loop. The `mutate` module works with **zero third-party dependencies** — install
+offline, use it to synthesize labeled training variants from any Python corpus.
 
----
-
-## How it works
-
-1. **Build an environment** — serialize your files dict with `build_environment` (or scan a project directory with `load_project_files`)
-2. **Generate a diff** — `generate_diff` sends context + your goal to an LLM and returns a unified diff
-3. **Apply it** — `smartapply` patches per-file with AI-assisted conflict resolution, surviving hunks that `git apply` rejects
-
-It works with any programming language and any OpenAI-compatible LLM endpoint.
-
----
-
-## Quick Start
-
-### 1. Install
+## Install
 
 ```bash
 pip install patchling
 ```
 
-### 2. Configure
-
-Get an API key from [nano-gpt.com/api](https://nano-gpt.com/api) (or use your own OpenAI-compatible endpoint via `GPTDIFF_LLM_BASE_URL`), then:
-
-```bash
-# Linux/macOS
-export GPTDIFF_LLM_API_KEY='your-api-key'
-
-# Windows
-set GPTDIFF_LLM_API_KEY=your-api-key
-```
-
-### 3. Use
-
-In your code — see the [API Reference](api.md) — or on a project directory via the CLI:
-
-```bash
-cd your-project
-patchling "Add type hints to all functions" --apply
-```
-
-For detailed setup instructions, see the [Installation Guide](installation.md).
-
----
-
-## The CLI: git-native workflow
-
-The `patchling` command scans a project (respecting `.gitignore`), generates a diff, and optionally applies it:
-
-| Command | What It Does | Use Case |
-|---------|--------------|----------|
-| `patchling "prompt"` | Generates prompt.txt only | Preview what will be sent to the AI |
-| `patchling "prompt" --call` | Generates diff.patch | Review changes before applying |
-| `patchling "prompt" --apply` | Generates and applies diff | Ready to make changes |
-
-```bash
-patchling "Refactor authentication to use JWT" --apply
-git diff          # review
-git add -p        # keep what you want
-git checkout .    # discard the rest
-```
-
----
-
-## Agent Loops: bounded steps, composed
-
-Each invocation is one goal → one diff, which makes Patchling safe to run in loops:
-
-```bash
-while true; do
-  patchling "Add missing test cases for edge conditions" --apply
-  sleep 5
-done
-```
-
-**Real results** from one overnight run on a Python project:
-
-| Metric | Before | After |
-|--------|--------|-------|
-| Test cases | 18 | 127 |
-| Functions with tests | 12% | 71% |
-
-For detailed patterns and recipes, see the [Automation Guide](examples/automation.md).
-
----
-
-## Documentation
-
-| Guide | Description |
-|-------|-------------|
-| [Python API](api.md) | `generate_diff`, `smartapply`, and friends — start here for library use |
-| [Quickstart](quickstart.md) | Get running in 2 minutes |
-| [CLI Reference](cli.md) | All command-line options |
-| [patchling-apply](patchling-apply.md) | Apply existing diffs with smartapply fallback |
-| [Agent Loops](examples/automation.md) | Autonomous improvement recipes |
-| [Core Concepts](concepts.md) | How Patchling works under the hood |
-| [Installation](installation.md) | Setup and configuration |
-| [Troubleshooting](troubleshooting.md) | Common issues and solutions |
-
-**Model Selection:** see [Choosing a Model](https://github.com/255BITS/patchling-py#choosing-a-model) in the README.
-
----
+CLI entry points: `patchling`, `patchling-apply` (plus `gptdiff` kept as a
+back-compat alias).
 
 ## Links
 
-- [GitHub Repository](https://github.com/255BITS/patchling-py) — source code (MIT licensed)
-- [PyPI Package](https://pypi.org/project/patchling/) — install with pip
-- [patchling](https://github.com/255BITS/patchling) — browser/Node port
-- [nanoodle.com](https://nanoodle.com) — visual AI workflow editor built on patchling
-- Built with [AI Agent Toolbox](https://toolbox.255labs.xyz)
+- [Quickstart](quickstart.md) — first diff in five lines
+- [API Reference](api.md) — full function reference
+- [CLI Reference](cli.md)
+- [Agent Loops](examples/automation.md) — embedding Patchling in automation
+- [GitHub](https://github.com/toxicwind/codeflux-patchling) · [PyPI](https://pypi.org/project/patchling/)

@@ -13,7 +13,7 @@
 
 1. **Clone Repository**:
    ```bash
-   git clone https://github.com/255BITS/patchling-py.git
+   git clone https://github.com/toxicwind/codeflux-patchling.git
    cd patchling
    ```
 

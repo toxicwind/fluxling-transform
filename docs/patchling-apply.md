@@ -6,7 +6,7 @@ title: patchling-apply
 
 > **Patchling everywhere:** this library also ships for browser and Node as [patchling](https://github.com/255BITS/patchling) — see it running live in [nanoodle.com](https://nanoodle.com), a no-server visual AI workflow editor built on it.
 
-`patchling-apply` is a companion tool to [Patchling](https://github.com/255BITS/patchling-py) that applies unified diffs directly to your project using Patchling’s patch logic.
+`patchling-apply` is a companion tool to [Patchling](https://github.com/toxicwind/codeflux-patchling) that applies unified diffs directly to your project using Patchling’s patch logic.
 
 ## Overview
 
