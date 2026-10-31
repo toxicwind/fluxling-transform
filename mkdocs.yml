@@ -36,13 +36,10 @@ nav:
   - Troubleshooting: troubleshooting.md
 extra:
   social:
-    - name: nanoodle.com
-      icon: fontawesome/solid/diagram-project
-      link: https://nanoodle.com
-    - name: patchling
-      icon: fontawesome/brands/js
-      link: https://github.com/255BITS/patchling
-    - name: 255labs.xyz
-      icon: fontawesome/solid/globe
-      link: https://255labs.xyz
+    - name: PyPI
+      icon: fontawesome/brands/python
+      link: https://pypi.org/project/patchling/
+    - name: GitHub
+      icon: fontawesome/brands/github
+      link: https://github.com/toxicwind/codeflux-patchling
 plugins:
