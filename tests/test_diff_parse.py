@@ -1,5 +1,5 @@
 import pytest
-from patchling.core import color_code_diff
+from fluxling.core import color_code_diff
 
 def test_color_code_diff():
     """

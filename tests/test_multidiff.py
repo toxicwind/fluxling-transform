@@ -1,5 +1,5 @@
 import pytest
-from patchling.core import generate_diff
+from fluxling.core import generate_diff
 
 # Dummy classes to simulate an LLM response
 class DummyMessage:
@@ -42,7 +42,7 @@ DIFF 2"""
         return DummyResponse(diff_str, prompt_tokens=10, completion_tokens=20, total_tokens=30)
 
     # Patch call_llm in the gptdiff module with our dummy function.
-    monkeypatch.setattr("patchling.core.call_llm", dummy_call_llm)
+    monkeypatch.setattr("fluxling.core.call_llm", dummy_call_llm)
 
     # generate_diff calls call_llm_for_diff internally, which now uses our dummy_call_llm.
     result = generate_diff("dummy environment", "dummy goal", model="test-model")

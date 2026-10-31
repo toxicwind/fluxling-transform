@@ -2,13 +2,13 @@
 
 Rule-based source transforms that produce unified diffs — no LLM, no API key,
 no network. Powers synthetic streams (demos, tests, pipelines) and gives
-patchling a fully offline mode.
+fluxling a fully offline mode.
 
 Deterministic given ``(rule, seed)``: the same seed always yields the same
 mutation. Each step mutates exactly one Python file.
 
 Example:
-    >>> from patchling.mutate import mutate_diff
+    >>> from fluxling.mutate import mutate_diff
     >>> goal, diff = mutate_diff({"app.py": "def hello():\\n    pass\\n"}, seed=3)
     >>> print(goal)
 """

@@ -2,7 +2,7 @@
 import subprocess
 import sys
 
-from patchling import generate_diff, smartapply, load_project_files, build_environment, save_files
+from fluxling import generate_diff, smartapply, load_project_files, build_environment, save_files
 
 
 def run_tests():

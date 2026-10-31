@@ -5,7 +5,7 @@
 import sys
 import subprocess
 import os
-from patchling.core import load_project_files, build_environment, smartapply, save_files, generate_diff
+from fluxling.core import load_project_files, build_environment, smartapply, save_files, generate_diff
 
 def run_command(command):
     """

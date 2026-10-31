@@ -1,20 +1,21 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='patchling',
-    version='0.8.1',
-    description='Natural-language code transformation as a library: generate unified diffs with LLMs and apply them resiliently with smartapply. Formerly gptdiff.',
+    name='fluxling',
+    version='0.9.0',
+    description='Natural-language code transformation as a library: generate unified diffs with LLMs and apply them resiliently with smartapply. Formerly gptdiff, then patchling.',
     author='255labs',
-    url='https://github.com/255BITS/patchling-py',
+    url='https://github.com/toxicwind/fluxling',
     project_urls={
-        'Documentation': 'https://255bits.github.io/patchling-py',
-        'Source': 'https://github.com/255BITS/patchling-py',
+        'Documentation': 'https://toxicwind.github.io/fluxling',
+        'Source': 'https://github.com/toxicwind/fluxling',
+        'Upstream (patchling-py)': 'https://github.com/255BITS/patchling-py',
         'Browser/Node runtime (npm)': 'https://www.npmjs.com/package/patchling',
-        'Built with patchling (nanoodle)': 'https://nanoodle.com',
+        'Built with fluxling (nanoodle)': 'https://nanoodle.com',
     },
-    keywords=['patchling', 'smartapply', 'llm', 'diff', 'unified-diff', 'patch', 'code-transformation', 'ai', 'codegen', 'gptdiff'],
+    keywords=['fluxling', 'patchling', 'smartapply', 'llm', 'diff', 'unified-diff', 'patch', 'code-transformation', 'ai', 'codegen', 'gptdiff', 'codeflux'],
     packages=find_packages(),  # Use find_packages() to automatically discover packages
-    package_data={'patchling': []},  # Add any package data if needed
+    package_data={'fluxling': []},  # Add any package data if needed
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     install_requires=[
@@ -28,13 +29,16 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            # New, on-brand commands
-            'patchling=patchling.core:main',
-            'patchling-apply=patchling.gptpatch:main',
+            # Current, on-brand commands
+            'fluxling=fluxling.core:main',
+            'fluxling-apply=fluxling.gptpatch:main',
+            'fluxling-workflow=fluxling.workflows:main',
             # Back-compat aliases (former names — keep existing scripts working)
-            'gptdiff=patchling.core:main',
-            'gptpatch=patchling.gptpatch:main',
-            'patchling-workflow=patchling.workflows:main',
+            'patchling=fluxling.core:main',
+            'patchling-apply=fluxling.gptpatch:main',
+            'patchling-workflow=fluxling.workflows:main',
+            'gptdiff=fluxling.core:main',
+            'gptpatch=fluxling.gptpatch:main',
         ],
     },
     license=None, # Remove license argument

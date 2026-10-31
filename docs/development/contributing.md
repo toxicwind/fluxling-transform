@@ -1,4 +1,4 @@
-# Contributing to Patchling
+# Contributing to Fluxling
 
 > **Patchling everywhere:** this library also ships for browser and Node as [patchling](https://github.com/255BITS/patchling) — see it running live in [nanoodle.com](https://nanoodle.com), a no-server visual AI workflow editor built on it.
 
@@ -13,8 +13,8 @@
 
 1. **Clone Repository**:
    ```bash
-   git clone https://github.com/toxicwind/codeflux-patchling.git
-   cd patchling
+   git clone https://github.com/toxicwind/fluxling.git
+   cd fluxling
    ```
 
 2. **Install Dependencies**:
@@ -24,7 +24,7 @@
 
 3. **Run Test Suite**:
    ```bash
-   pytest tests/ --cov=patchling --cov-report=term-missing
+   pytest tests/ --cov=fluxling --cov-report=term-missing
    ```
 
 ## Contribution Workflow
@@ -58,9 +58,9 @@ Test your changes with a simple loop to verify reliability:
 
 ```bash
 while true; do
-  patchling "Your test prompt using the new feature" --apply
+  fluxling "Your test prompt using the new feature" --apply
   sleep 5
 done
 ```
 
-This helps ensure Patchling remains production-ready for autonomous code improvement.
+This helps ensure Fluxling remains production-ready for autonomous code improvement.

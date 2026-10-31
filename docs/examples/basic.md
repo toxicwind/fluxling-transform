@@ -12,7 +12,7 @@ def process_data(input):
         result.append(item*2)
     return result
 
-patchling "Convert loop to list comprehension" utils.py --apply
+fluxling "Convert loop to list comprehension" utils.py --apply
 ```
 
 ```python
@@ -24,7 +24,7 @@ def process_data(input):
 ## Multi-File Rename
 
 ```bash
-patchling "Rename UserController to AccountController" \
+fluxling "Rename UserController to AccountController" \
     app/controllers/user_controller.py \
     test/controllers/test_user_controller.py \
     docs/api.md --apply
@@ -33,7 +33,7 @@ patchling "Rename UserController to AccountController" \
 ## Full-Stack Type Safety
 
 ```bash
-patchling "Add Python type hints throughout codebase" \
+fluxling "Add Python type hints throughout codebase" \
     --model deepseek-reasoner \
     --temperature 0.3 \
     --apply
@@ -42,22 +42,22 @@ patchling "Add Python type hints throughout codebase" \
 ## Legacy Modernization
 
 ```bash
-patchling "Convert string formatting to f-strings" src/ --apply
+fluxling "Convert string formatting to f-strings" src/ --apply
 ```
 
 ---
 
 ## Ready for More?
 
-These examples show what Patchling can do with a single command. But the real power comes from **running it continuously**.
+These examples show what Fluxling can do with a single command. But the real power comes from **running it continuously**.
 
 ```bash
 while true; do
-  patchling "Improve code quality" --apply
+  fluxling "Improve code quality" --apply
   sleep 5
 done
 ```
 
-Let Patchling work on your codebase while you sleep. Each cycle finds the next improvement, applies it, and continues—test coverage expands, tech debt shrinks, security hardens automatically.
+Let Fluxling work on your codebase while you sleep. Each cycle finds the next improvement, applies it, and continues—test coverage expands, tech debt shrinks, security hardens automatically.
 
 **[See Agent Loops Guide →](automation.md)** for ready-to-use automation recipes.

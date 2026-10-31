@@ -32,7 +32,7 @@ def test_smartapply_complex_single_hunk(mocker):
 **Example Mock Setup:**
 ```python
 # Mock LLM response for predictable testing
-mocker.patch('patchling.patchling.call_llm_for_apply',
+mocker.patch('fluxling.fluxling.call_llm_for_apply',
     return_value="def new():\n    print('Updated')")
 
 # Verify transformation
@@ -48,7 +48,7 @@ assert "Updated" in updated["file.py"]
 pip install -e .[test]
 
 # Run all tests with coverage
-pytest tests/ --cov=patchling --cov-report=term-missing
+pytest tests/ --cov=fluxling --cov-report=term-missing
 
 # Target specific test cases
 pytest tests/test_smartapply.py -k "test_smartapply_file_modification"

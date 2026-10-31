@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from patchling.core import apply_diff
+from fluxling.core import apply_diff
 
 
 @pytest.fixture

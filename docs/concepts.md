@@ -48,10 +48,10 @@ def smartapply(diff, files):
 
 ## Why Agent Loops Work
 
-Patchling's architecture makes it uniquely suited for continuous, autonomous improvement:
+Fluxling's architecture makes it uniquely suited for continuous, autonomous improvement:
 
 ### Idempotent by Design
-Each Patchling operation is atomic and self-contained. Running the same prompt twice produces the same result—no cascading failures or state corruption. This makes loops safe to run indefinitely.
+Each Fluxling operation is atomic and self-contained. Running the same prompt twice produces the same result—no cascading failures or state corruption. This makes loops safe to run indefinitely.
 
 ### Self-Healing Patches
 SmartApply's conflict resolution means patches don't break when code drifts. An agent loop that started yesterday keeps working today, even as other changes land.
@@ -71,6 +71,6 @@ Each iteration builds on the last. Real example from a test coverage loop:
 
 **Time saved:** What would take a developer 2-3 days of manual test writing completed autonomously overnight.
 
-The same properties that make Patchling safe for single patches—atomic operations, context-aware merging, strict idempotence—make it *powerful* when run continuously.
+The same properties that make Fluxling safe for single patches—atomic operations, context-aware merging, strict idempotence—make it *powerful* when run continuously.
 
 See [Agent Loops](examples/automation.md) for production-ready patterns.

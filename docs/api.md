@@ -1,4 +1,4 @@
-# Patchling API Reference
+# Fluxling API Reference
 
 > **Patchling everywhere:** this library also ships for browser and Node as [patchling](https://github.com/255BITS/patchling) — see it running live in [nanoodle.com](https://nanoodle.com), a no-server visual AI workflow editor built on it.
 
@@ -29,7 +29,7 @@ def generate_diff(
 
 **Example:**
 ```python
-from patchling import generate_diff, build_environment  # Uses AI Agent Toolbox for reliable parsing
+from fluxling import generate_diff, build_environment  # Uses AI Agent Toolbox for reliable parsing
 
 # Multi-file environment example
 files = {
@@ -130,7 +130,7 @@ updated_files = smartapply(diff, original_files)
 **Conflict Resolution & Error Handling:**
 ```python
 from openai import APIError
-from patchling import parse_environment
+from fluxling import parse_environment
 
 diff = '''diff --git a/core.py b/core.py
 @@ -10,3 +10,3 @@
@@ -182,7 +182,7 @@ except Exception as e:
 
 1. **Environment Formatting**:
    ```python
-   from patchling import build_environment
+   from fluxling import build_environment
    env = build_environment(files_dict)  # Safely handles edge cases
    ```
    
@@ -257,7 +257,7 @@ updated_files = smartapply(diff, original_files)
 
 **Batch Processing Pipeline:**
 ```python
-from patchling import parse_environment, build_environment
+from fluxling import parse_environment, build_environment
 
 # Process multiple transformations sequentially
 files = load_project_files()  # Your custom loader
@@ -274,10 +274,10 @@ save_files(files)  # Your custom saver
 **Agent Loop Integration:**
 ```python
 import time
-from patchling import generate_diff, smartapply, build_environment
+from fluxling import generate_diff, smartapply, build_environment
 
 def improvement_loop(files, goal, cycles=None):
-    """Run Patchling continuously until stopped or cycle limit reached."""
+    """Run Fluxling continuously until stopped or cycle limit reached."""
     count = 0
     while cycles is None or count < cycles:
         env = build_environment(files)
@@ -303,7 +303,7 @@ save_files(files)
 | Security vulnerability fixes | Expensive audit + remediation | Continuous scanning and patching |
 | Tech debt reduction | Never prioritized | Measurable complexity reduction per cycle |
 
-Agent loops transform Patchling from a productivity tool into an autonomous code improvement system.
+Agent loops transform Fluxling from a productivity tool into an autonomous code improvement system.
 
 See [Agent Loops](examples/automation.md) for battle-tested patterns and bash recipes.
 

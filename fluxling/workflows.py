@@ -1,4 +1,4 @@
-"""patchling.workflows — universal patch workflows: propose -> apply -> verify, code-run-first.
+"""fluxling.workflows — universal patch workflows: propose -> apply -> verify, code-run-first.
 
 Doctrine (2026-10-31):
 - CODE PROVES; the model advises. A workflow is never satisfied by model assertion.
@@ -15,8 +15,8 @@ import subprocess
 import sys
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from patchling.applydiff import apply_diff
-from patchling.core import call_llm
+from fluxling.applydiff import apply_diff
+from fluxling.core import call_llm
 
 BASE_URL = "https://freeinference.org/v1"
 UA_NOTE = "Cloudflare UA wall (anomaly #14) is handled by the HTTP client below."
@@ -45,7 +45,7 @@ def get_freeinference_key() -> str:
 
 
 def chat(messages, model=DEFAULT_MODEL, max_tokens=4000, temperature=0.2, **_):
-    """One freeinference/Qwen completion via patchling's call_llm. Returns (text, usage)."""
+    """One freeinference/Qwen completion via fluxling's call_llm. Returns (text, usage)."""
     key = get_freeinference_key()
     resp: Any = call_llm(key, BASE_URL, model, messages, max_tokens, temperature)
     if not hasattr(resp, "choices"):
@@ -190,7 +190,7 @@ def verify_apply(
 
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="patchling-workflow",
+        prog="fluxling-workflow",
         description="universal patch workflows (code-run-first)",
     )
     sub = parser.add_subparsers(dest="workflow", required=True)

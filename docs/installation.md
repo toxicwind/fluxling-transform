@@ -7,20 +7,20 @@
 
 ## Install via pip
 
-To install `patchling` from PyPI, run the following command:
+To install `fluxling` from PyPI, run the following command:
 
 ```bash
-pip install patchling
+pip install fluxling
 pip install tiktoken  # For token counting
 ```
 
 ## Development Installation (if no pip package is available yet)
 
-If the `patchling` package is not yet available on PyPI, you can install it from the source code:
+If the `fluxling` package is not yet available on PyPI, you can install it from the source code:
 
 ```bash
-git clone https://github.com/toxicwind/codeflux-patchling.git
-cd patchling
+git clone https://github.com/toxicwind/fluxling.git
+cd fluxling
 python setup.py install
 ```
 
@@ -28,7 +28,7 @@ python setup.py install
 
 ### API Key and Base URL
 
-To use `patchling`, you need an API key from [nano-gpt.com/api](https://nano-gpt.com/api). Once you get your API key, you need to set up the following environment variables.
+To use `fluxling`, you need an API key from [nano-gpt.com/api](https://nano-gpt.com/api). Once you get your API key, you need to set up the following environment variables.
 
 #### Linux/MacOS
 ```bash
@@ -48,26 +48,26 @@ set GPTDIFF_LLM_BASE_URL=https://nano-gpt.com/api/v1/
 The default base URL points to `nano-gpt.com`'s API. Supported models can be specified with:
 
 ```bash
-patchling 'your prompt' --model $GPTDIFF_MODEL
+fluxling 'your prompt' --model $GPTDIFF_MODEL
 ```
 
 ---
 
 ## You're Ready
 
-With Patchling installed, you can:
+With Fluxling installed, you can:
 
 1. **Make one-off changes** - Describe what you want, get a diff, apply it
-2. **Run agent loops** - Let Patchling work autonomously while you sleep
+2. **Run agent loops** - Let Fluxling work autonomously while you sleep
 
 Most users start with single commands, then graduate to agent loops once they see the power:
 
 ```bash
 # Start with a single change
-patchling "Add input validation" --apply
+fluxling "Add input validation" --apply
 
 # Then scale to autonomous improvement
-while true; do patchling "Fix code quality issues" --apply; sleep 5; done
+while true; do fluxling "Fix code quality issues" --apply; sleep 5; done
 ```
 
 Real users have run overnight loops that expanded test coverage from 18 to 127 test cases, and security sprints that eliminated 8 SQL injection vulnerabilities and 12 XSS flaws automatically.
