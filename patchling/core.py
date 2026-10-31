@@ -552,6 +552,49 @@ def smartapply(diff_text, files, model=None, api_key=None, base_url=None):
     if model is None:
         model = os.getenv('GPTDIFF_MODEL', 'deepseek-reasoner')
     parsed_diffs = parse_diff_per_file(diff_text)    
+
+    # Path normalization + fuzzy resolution: LLMs emit malformed headers
+    # (missing diff --git line, a/ b/ prefixes, temp paths). Resolve each
+    # diff path to a REAL file in `files` before dispatching to the LLM.
+    def resolve_path(path):
+        if path is None:
+            return None
+        # strip a/ b/ prefixes and any leading directory components that
+        # don't exist in files (LLM temp dirs, repo-absolute prefixes)
+        norm = re.sub(r'^(?:a|b)/', '', path)
+        if norm in files:
+            return norm
+        # try progressively shorter suffixes: match by end-of-path
+        parts = norm.split('/')
+        for i in range(len(parts)):
+            cand = '/'.join(parts[i:])
+            if cand in files:
+                return cand
+        # basename match
+        base = parts[-1]
+        for f in files:
+            if f.split('/')[-1] == base:
+                return f
+        # content match: the diff's removal/context lines should appear in
+        # exactly one candidate file (LLM header paths are often garbage)
+        removals = [l[1:].strip() for l in patch.splitlines()
+                    if l.startswith('-') and not l.startswith('--- ')]
+        removals = [r for r in removals if r]
+        if removals:
+            scored = [(f, sum(1 for r in removals if r in files[f])) for f in files]
+            best, score = max(scored, key=lambda x: x[1])
+            if score > 0:
+                return best
+        return None
+
+    resolved = []
+    for path, patch in parsed_diffs:
+        r = resolve_path(path)
+        if r is None:
+            # genuinely new file (not in files): keep as-is
+            r = re.sub(r'^(?:a|b)/', '', path) if path else path
+        resolved.append((r, patch))
+    parsed_diffs = resolved
     print("-" * 40)
     print("SMARTAPPLY")
     print(diff_text)
