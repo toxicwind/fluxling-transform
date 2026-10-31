@@ -1,11 +1,9 @@
 # Patchling
 
 <div align="right">
-
-[![repo](https://img.shields.io/badge/github-toxicwind%2Fcodeflux--patchling-181717.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/toxicwind/codeflux-patchling)
-[![pypi](https://img.shields.io/badge/pypi-patchling-3775A9.svg?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/patchling/)
-[![version](https://img.shields.io/badge/version-0.8.1-2081C7.svg?style=for-the-badge)](https://pypi.org/project/patchling/)
-
+  <a href="https://github.com/toxicwind/codeflux-patchling"><img alt="repo" src="https://img.shields.io/badge/github-toxicwind%2Fcodeflux--patchling-181717.svg?style=for-the-badge&amp;logo=github&amp;logoColor=white"></a>
+  <a href="https://pypi.org/project/patchling/"><img alt="pypi" src="https://img.shields.io/badge/pypi-patchling-3775A9.svg?style=for-the-badge&amp;logo=pypi&amp;logoColor=white"></a>
+  <a href="https://pypi.org/project/patchling/"><img alt="version" src="https://img.shields.io/badge/version-0.8.1-2081C7.svg?style=for-the-badge"></a>
 </div>
 
 **Natural-language code transformation as a library.** Hand Patchling a project, a
