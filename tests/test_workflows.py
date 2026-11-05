@@ -1,8 +1,8 @@
-"""Contract tests for patchling.workflows — code-run-first verify_apply."""
+"""Contract tests for fluxling.workflows — code-run-first verify_apply."""
 
 import pytest
 
-import patchling.workflows as wf
+import fluxling.workflows as wf
 
 
 def _fake_chat(script):

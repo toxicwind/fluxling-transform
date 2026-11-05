@@ -5,7 +5,7 @@
 ## Database Layer Migration
 
 ```bash
-patchling "Replace raw SQL with SQLAlchemy ORM" \
+fluxling "Replace raw SQL with SQLAlchemy ORM" \
     models/ queries/ \
     --apply
 ```
@@ -13,7 +13,7 @@ patchling "Replace raw SQL with SQLAlchemy ORM" \
 ## API Versioning
 
 ```bash
-patchling "Add v2 API endpoints with backward compatibility" \
+fluxling "Add v2 API endpoints with backward compatibility" \
     --model deepseek-reasoner \
     --temperature 0.5 \
     --apply
@@ -27,7 +27,7 @@ patchling "Add v2 API endpoints with backward compatibility" \
 ## Internationalization
 
 ```bash
-patchling "Extract all UI strings to translation files" \
+fluxling "Extract all UI strings to translation files" \
     --files templates/ static/js/ \
     --call
 ```
@@ -38,12 +38,12 @@ Saved in patch.diff
 
 ## Take It Further: Agent Loops
 
-These advanced transformations become even more powerful when run continuously. Instead of a single pass, let Patchling iterate until the job is done:
+These advanced transformations become even more powerful when run continuously. Instead of a single pass, let Fluxling iterate until the job is done:
 
 ```bash
 # Complete migration in multiple passes
 while true; do
-  patchling "Continue migrating raw SQL to SQLAlchemy ORM" \
+  fluxling "Continue migrating raw SQL to SQLAlchemy ORM" \
     models/ queries/ \
     --apply
   sleep 5

@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
+{#
+  Top announcement bar shown on every page. Points at patchling.app (the
+  hub for the patchling family — the JS/npm port and this Python port,
+  fluxling) and the live browser demos.
+#}
 {% block announce %}
-  <a href="https://pypi.org/project/patchling/" target="_blank" rel="noopener">PyPI</a>
-  — natural-language code transformation as a library and CLI
+  <a href="https://patchling.app" target="_blank" rel="noopener">patchling.app</a>
+  — natural-language code patching for JavaScript &amp; Python
+  (Python port: <strong>fluxling</strong>)
   &nbsp;·&nbsp;
-  <a href="https://github.com/toxicwind/codeflux-patchling" target="_blank" rel="noopener">source</a>
+  <a href="https://github.com/toxicwind/fluxling" target="_blank" rel="noopener">source</a>
 {% endblock %}

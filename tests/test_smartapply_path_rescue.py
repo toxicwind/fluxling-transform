@@ -1,5 +1,5 @@
 """smartapply path rescue (session 2026-10-31: LLM emitted garbage temp-path headers; smartapply created a phantom file instead of matching content)."""
-from patchling.core import smartapply
+from fluxling.core import smartapply
 
 
 BAD_DIFF = (
@@ -15,7 +15,7 @@ BAD_DIFF = (
 
 def test_garbage_path_rescued_by_content(monkeypatch):
     """Unresolvable diff path + removal lines matching one file → apply there, no phantom."""
-    monkeypatch.setattr('patchling.core.call_llm_for_apply_with_think_tool_available',
+    monkeypatch.setattr('fluxling.core.call_llm_for_apply_with_think_tool_available',
                         lambda path, original, patch, model, **kw: patch)
     files = {'calc.py': 'def add(a, b):\n    return a + b\n', 'readme.md': '# calc\n'}
     out = smartapply(BAD_DIFF, dict(files))
@@ -25,7 +25,7 @@ def test_garbage_path_rescued_by_content(monkeypatch):
 
 def test_exact_path_still_wins(monkeypatch):
     """Existing file referenced by its real (prefixed) path resolves exactly."""
-    monkeypatch.setattr('patchling.core.call_llm_for_apply_with_think_tool_available',
+    monkeypatch.setattr('fluxling.core.call_llm_for_apply_with_think_tool_available',
                         lambda path, original, patch, model, **kw: patch)
     files = {'calc.py': 'def add(a, b):\n    return a + b\n'}
     diff = ("diff --git a/calc.py b/calc.py\n"
@@ -41,7 +41,7 @@ def test_exact_path_still_wins(monkeypatch):
 
 def test_genuinely_new_file_not_clobbered(monkeypatch):
     """Path matching nothing and content matching nothing stays a new file."""
-    monkeypatch.setattr('patchling.core.call_llm_for_apply_with_think_tool_available',
+    monkeypatch.setattr('fluxling.core.call_llm_for_apply_with_think_tool_available',
                         lambda path, original, patch, model, **kw: patch)
     files = {'calc.py': 'def add(a, b):\n    return a + b\n'}
     diff = ("--- /dev/null\n"

@@ -1,7 +1,7 @@
-"""patchling: natural-language code transformation as a library.
+"""fluxling: natural-language code transformation as a library.
 
 The LLM-backed API (generate_diff, smartapply, ...) loads lazily so offline
-modules such as patchling.mutate import with zero third-party dependencies.
+modules such as fluxling.mutate import with zero third-party dependencies.
 """
 from __future__ import annotations
 

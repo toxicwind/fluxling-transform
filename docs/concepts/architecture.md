@@ -71,7 +71,7 @@ graph LR
 
 ## Built for Continuous Operation
 
-Every architectural decision in Patchling was made with agent loops in mind:
+Every architectural decision in Fluxling was made with agent loops in mind:
 
 | Component | Single-Use Benefit | Agent Loop Benefit |
 |-----------|-------------------|-------------------|
@@ -80,4 +80,4 @@ Every architectural decision in Patchling was made with agent loops in mind:
 | **SmartApply Conflict Resolution** | Handles messy diffs gracefully | Patches stay valid as code evolves between cycles |
 | **Easy API** | Simple integration | Trivial to wrap in `while true` for autonomous improvement |
 
-The same properties that make Patchling reliable for one-off patches make it *powerful* when run continuously. See [Agent Loops](../examples/automation.md) for battle-tested automation patterns.
+The same properties that make Fluxling reliable for one-off patches make it *powerful* when run continuously. See [Agent Loops](../examples/automation.md) for battle-tested automation patterns.

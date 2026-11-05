@@ -1,6 +1,6 @@
 # File: tests/test_strip_bad_output.py
 import pytest
-from patchling.core import strip_bad_output
+from fluxling.core import strip_bad_output
 
 
 def test_strip_bad_output_removes_wrapping():
