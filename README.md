@@ -143,11 +143,13 @@ export GPTDIFF_SMARTAPPLY_MODEL='gpt5-mini'
 | Variable | Purpose | Default |
 |---|---|---|
 | `GPTDIFF_LLM_API_KEY` | API key (required) | — |
-| `GPTDIFF_MODEL` | Model for diff generation | `gemini-3-pro-preview` |
-| `GPTDIFF_SMARTAPPLY_MODEL` | Model for applying diffs | `GPTDIFF_MODEL` |
+| `GPTDIFF_MODEL` | Model for diff generation | `deepseek-reasoner` |
+| `GPTDIFF_SMARTAPPLY_MODEL` | Model for applying diffs | `deepseek-reasoner` |
 | `GPTDIFF_LLM_BASE_URL` | OpenAI-compatible endpoint | `https://nano-gpt.com/api/v1/` |
 
 Get a key at [nano-gpt.com/api](https://nano-gpt.com/api), or self-host. Optional services: none required — `fluxling.mutate` + `smartapply` run fully offline.
+
+**Estate default (codeflux family)**: `fluxling/freeinference.py` routes through the estate's rhodochrosite router (`PATCHLING_ROUTER_URL`, default `http://127.0.0.1:25193/v1`) to the freeinference qwen lane — model `qwen3.6-35b`, bare ids only (prefixed ids 404 on the router). This is what the estate's agents use by default; nano-gpt is the standalone fallback.
 
 ### Command-line tools
 
