@@ -474,6 +474,45 @@ def load_images(image_paths):
         images.append({"media_type": media_type, "data": encoded, "path": image_path})
     return images
 
+def clean_diff(diff_text: str) -> str:
+    """Extract a git-applyable unified diff from raw model output.
+
+    The model often wraps the diff in ```diff fences, prepends prose, or emits
+    malformed hunk markers. This extracts the clean diff body so git apply
+    never sees a corrupt patch. Falls back to the raw text if no diff markers
+    are found (best-effort).
+    """
+    import re
+    text = diff_text or ""
+    # Strip markdown code fences (```diff ... ``` or ``` ... ```).
+    fenced = re.search(r"```(?:diff|patch)?\s*\n(.*?)```", text, re.DOTALL)
+    if fenced:
+        text = fenced.group(1)
+    # Keep only lines that look like a unified diff (diff headers, hunks, +/-).
+    lines = text.split("\n")
+    kept = []
+    in_diff = False
+    for line in lines:
+        s = line.rstrip()
+        if s.startswith("diff --git") or s.startswith("--- ") or s.startswith("+++ "):
+            in_diff = True
+            kept.append(s)
+            continue
+        if in_diff:
+            if s.startswith("@@") or s == "":
+                kept.append(s)
+            elif (s.startswith("+") or s.startswith("-")) and len(s) > 1:
+                kept.append(s)
+            elif s.startswith(" ") and len(s) > 1:
+                kept.append(s)
+            else:
+                # Stray model prose or empty +/- artifacts — drop them.
+                continue
+    if kept:
+        return "\n".join(kept).rstrip() + "\n"
+    return diff_text or ""
+
+
 def generate_diff(environment, goal, model=None, temperature=1.0, max_tokens=32000, api_key=None, base_url=None, prepend=None, anthropic_budget_tokens=None, images=None):
     """API: Generate a git diff from the environment and goal.
 
@@ -512,7 +551,7 @@ prepended to the system prompt.
         budget_tokens=int(anthropic_budget_tokens) if anthropic_budget_tokens is not None else None,
         images=encoded_images,
     )
-    return diff_text
+    return clean_diff(diff_text)
 
 def smartapply(diff_text, files, model=None, api_key=None, base_url=None):
     """Applies unified diffs to file contents with AI-powered conflict resolution.

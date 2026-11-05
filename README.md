@@ -4,6 +4,8 @@
 [![pypi](https://img.shields.io/badge/pypi-patchling-3775A9.svg?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/patchling/)
 [![version](https://img.shields.io/badge/version-0.8.1-blue.svg?style=for-the-badge)](https://github.com/toxicwind/codeflux-patchling)
 [![license](https://img.shields.io/badge/license-public%20domain-green.svg?style=for-the-badge)](https://github.com/toxicwind/codeflux-patchling/blob/main/LICENSE.txt)
+[![tests](https://img.shields.io/badge/tests-55%20passed-brightgreen.svg?style=for-the-badge&logo=pytest)](https://github.com/toxicwind/codeflux-patchling)
+[![docs](https://img.shields.io/badge/docs-gh--pages-blueviolet.svg?style=for-the-badge&logo=githubpages)](https://toxicwind.github.io/codeflux-patchling/)
 [![codeflux](https://img.shields.io/badge/codeflux-family%20member-00ADD8.svg?style=for-the-badge)](https://github.com/toxicwind/codeflux)
 
 </div>
@@ -31,7 +33,7 @@ print(updated["main.py"])
 
 The hard part — applying an LLM-generated diff that `git apply` would reject — is what `smartapply` solves: per-file, AI-assisted patch resolution that survives fuzzy hunks, renames, new files, and deletions.
 
-🌐 Project home: [patchling.app](https://patchling.app) — try it live in your browser · 📚 Full docs: [255bits.github.io/patchling-py](https://255bits.github.io/patchling-py)
+🌐 **Live Interactive Landing & Docs**: [toxicwind.github.io/codeflux-patchling](https://toxicwind.github.io/codeflux-patchling/) · 📦 PyPI: [pypi.org/project/patchling](https://pypi.org/project/patchling/)
 
 ---
 
