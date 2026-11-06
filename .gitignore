@@ -1,18 +1,5 @@
-.git
-build
-.pytest_cache
-*.egg-info/
-*.pyc
-.jekyll-cache
-_site
+node_modules/
+.venv/
+build/
 site/
-dist/
-.sass-cache/
 __pycache__/
-worktrees/
-prompt.txt
-diff.patch
-*.orig
-*.rej
-.ffs/
-.github/workflows/ # CI lane local-only: token lacks workflow scope (anomaly #84)

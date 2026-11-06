@@ -1,0 +1,16 @@
+{
+  "name": "@estate/fluxling-transform",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "fluxling-transform — Bun/TS modular port of the fluxling transform engine: smartapply (fuzzy diff application), applydiff (path-safe), agentic LLM layer (file + project prompts).",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.4"
+  }
+}
