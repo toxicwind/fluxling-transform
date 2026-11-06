@@ -15,3 +15,4 @@ diff.patch
 *.orig
 *.rej
 .ffs/
+.github/workflows/ # CI lane local-only: token lacks workflow scope (anomaly #84)
