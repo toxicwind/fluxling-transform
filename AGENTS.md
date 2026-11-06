@@ -1,4 +1,4 @@
-# AGENTS.md — codeflux-patchling
+# AGENTS.md — fluxling-transform
 
 > Refines: `/home/toxic/AGENTS.md` (the estate control-plane). This file is
 > **living doctrine** for the codeflux family. It asserts "refines, never

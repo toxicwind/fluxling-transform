@@ -4,7 +4,7 @@
 
 Please **do not open a public issue** for security vulnerabilities. Report privately:
 
-- Open a [private security advisory](https://github.com/toxicwind/codeflux-patchling/security/advisories/new)
+- Open a [private security advisory](https://github.com/toxicwind/fluxling-transform/security/advisories/new)
   (replace OWNER/REPO with the actual repo), or
 - Email the maintainer(s) directly.
 

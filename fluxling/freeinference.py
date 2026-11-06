@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FreeInference backend for codeflux-patchling (living code).
+FreeInference backend for fluxling-transform (living code).
 
 Routes patchling's generate_diff / smartapply through the estate's
 rhodochrosite router (:25193) to the freeinference qwen lane, so code
