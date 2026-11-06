@@ -1,59 +1,64 @@
 # fluxling-transform
 
-<div align="center">
+**Bun/TS modular port of the fluxling transform engine — smartapply, path-safe
+diff application, agentic LLM prompts, deterministic mutation, and
+code-run-first workflows.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE) [![GitHub stars](https://img.shields.io/github/stars/toxicwind/fluxling-transform?style=for-the-badge)](https://github.com/toxicwind/fluxling-transform) [![GitHub issues](https://img.shields.io/github/issues/toxicwind/fluxling-transform?style=for-the-badge)](https://github.com/toxicwind/fluxling-transform/issues)
+> Part of the **flux** pen (build/CI). The transform member of the fluxling
+> family. Ex `codeflux-patchling` (Python), fully ported to Bun/TS with tsgo
+> (TypeScript 7) typechecking.
 
-</div>
+## Modules
 
----
+| Module | Role |
+|---|---|
+| `src/applydiff.ts` | apply unified diffs to files on disk (path-traversal safe) |
+| `src/core.ts` | `smartapply` — fuzzy path resolution + deterministic apply |
+| `src/llm.ts` | agentic LLM layer — **file + project prompts**, router-routed |
+| `src/mutate.ts` | offline deterministic code mutation (no LLM) |
+| `src/workflow.ts` | code-run-first patch workflows (propose → apply → verify) |
 
-## fluxling-transform — a focused, dependency-free tool for the task it solves.
-
-<p align="center">
-  <a href="docs/">Explore the docs »</a> ·
-  <a href="https://github.com/toxicwind/fluxling-transform/issues/new?labels=bug">Report Bug</a> ·
-  <a href="https://github.com/toxicwind/fluxling-transform/issues/new?labels=enhancement">Request Feature</a>
-</p>
-
-## Features
-
-
-## Getting Started
-
-### Prerequisites
-
-- Bun >= 1.1 (or the runtime your package targets)
-
-### Install
+## Quickstart
 
 ```bash
-pip install -e .
+bun install
+bun test                 # 15/15 pass
+bun run typecheck        # tsgo (TS7), exit 0
 ```
 
-## Usage
+## Agentic prompts (file + project)
 
-See [docs/](docs/) for the full API.
+The LLM layer ships properly-engineered prompts for **both** transformation
+scales:
 
-## Roadmap
+- **Project-level** (`projectSystemPrompt` / `projectUserPrompt`) — generate a
+  full unified diff for a goal across a project. Enforces minimal change,
+  exact context lines, and a strict `\`\`\`diff` output contract.
+- **File-level** (`fileSystemPrompt` / `fileUserPrompt`) — apply a diff to one
+  file with conflict resolution. Preserves surrounding context, outputs the
+  complete file.
 
-- [x] First release
-- [ ] Community contributions welcome
+Both route through the estate router (rhodochrosite :25193) with kryptos SSOT.
 
-See the [open issues](https://github.com/toxicwind/fluxling-transform/issues) for full roadmap and proposed features.
+## smartapply
 
-## Contributing
+The crown jewel: fuzzy path resolution for LLM-emitted diffs (strip `a/ b/`
+prefixes, suffix match, basename match, content fingerprint), then
+deterministic hunk application. Handles creations, modifications, deletions.
 
-Contributions are what make the open-source community such an amazing place — read [CONTRIBUTING.md](CONTRIBUTING.md) and jump in.
+```ts
+import { smartapply } from "@estate/fluxling-transform";
+
+const updated = smartapply(diffText, { "src/app.ts": "original" });
+// updated["src/app.ts"] = applied content; deleted files omitted
+```
+
+## Deeplinks
+
+- [fluxling](../fluxling/) — the umbrella (NL goal → diff)
+- [fluxling-rig](../fluxling-rig/) — the agent-loop rig harness
+- [flux pen](../../) — the build/CI pen (thin coordinator)
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
-
-## Contact & Acknowledgments
-
-Maintainer: @toxicwind — open a [discussion](https://github.com/toxicwind/fluxling-transform/issues).
-
----
-
-> Don't forget to give the project a star! ⭐ Thanks again!
+MIT. Built for the estate's flux pen.
