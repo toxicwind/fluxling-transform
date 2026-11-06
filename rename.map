@@ -1,0 +1,27 @@
+[
+  {
+    "from": "codeflux-rig",
+    "to": "fluxling-rig",
+    "file": "AGENTS.md"
+  },
+  {
+    "from": "codeflux",
+    "to": "fluxling",
+    "file": "AGENTS.md"
+  },
+  {
+    "from": "codeflux",
+    "to": "fluxling",
+    "file": "docs/index.md"
+  },
+  {
+    "from": "codeflux",
+    "to": "fluxling",
+    "file": "fluxling/mutate.py"
+  },
+  {
+    "from": "codeflux",
+    "to": "fluxling",
+    "file": "setup.py"
+  }
+]

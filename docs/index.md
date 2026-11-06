@@ -1,10 +1,10 @@
 <div class="pl-hero">
-  <p class="pl-kicker">codeflux family</p>
+  <p class="pl-kicker">fluxling family</p>
   <h1>Natural-language code transformation,<br><em>without the API key tax.</em></h1>
   <p class="pl-sub">Fluxling turns plain-English goals into unified diffs — via LLM when you want it, via <strong>deterministic rules</strong> when you don't. This fork adds an offline mutation core: byte-reproducible on <code>(rule, seed)</code>, zero dependencies, zero network.</p>
   <p class="pl-cta">
     <a class="pl-btn" href="quickstart/">Get started</a>
-    <a class="pl-btn pl-btn-ghost" href="https://github.com/toxicwind/codeflux-fluxling">Source</a>
+    <a class="pl-btn pl-btn-ghost" href="https://github.com/toxicwind/fluxling-fluxling">Source</a>
     <a class="pl-btn pl-btn-ghost" href="https://pypi.org/project/fluxling/">PyPI</a>
   </p>
 </div>
@@ -48,7 +48,7 @@ goal, diff = mutate_diff({"app.py": source}, rule=None, seed=3)
     <tr><td>Import cost</td><td>eager, 40+ symbols</td><td>lazy 5-symbol API</td></tr>
     <tr><td>Apply engine</td><td>fuzzy in-library</td><td>strict on disk (guarded) + fuzzy in <code>smartapply</code></td></tr>
     <tr><td>Network</td><td>required</td><td>optional — <code>mutate</code> never calls out</td></tr>
-    <tr><td>Role</td><td>general-purpose library</td><td>codeflux deterministic backend</td></tr>
+    <tr><td>Role</td><td>general-purpose library</td><td>fluxling deterministic backend</td></tr>
   </table>
 </div>
 

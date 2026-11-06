@@ -13,7 +13,7 @@ setup(
         'Browser/Node runtime (npm)': 'https://www.npmjs.com/package/patchling',
         'Built with fluxling (nanoodle)': 'https://nanoodle.com',
     },
-    keywords=['fluxling', 'patchling', 'smartapply', 'llm', 'diff', 'unified-diff', 'patch', 'code-transformation', 'ai', 'codegen', 'gptdiff', 'codeflux'],
+    keywords=['fluxling', 'patchling', 'smartapply', 'llm', 'diff', 'unified-diff', 'patch', 'code-transformation', 'ai', 'codegen', 'gptdiff', 'fluxling'],
     packages=find_packages(),  # Use find_packages() to automatically discover packages
     package_data={'fluxling': []},  # Add any package data if needed
     long_description=open('README.md').read(),

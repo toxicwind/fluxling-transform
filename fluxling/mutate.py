@@ -1,4 +1,4 @@
-"""Offline deterministic code mutation (codeflux fork improvement).
+"""Offline deterministic code mutation (fluxling fork improvement).
 
 Rule-based source transforms that produce unified diffs — no LLM, no API key,
 no network. Powers synthetic streams (demos, tests, pipelines) and gives
@@ -42,7 +42,7 @@ def _add_docstring(src: str, rng: random.Random):
     head_end = m.end()
     if '"""' in src[head_end:head_end + 120]:
         return None
-    doc = '    """Synthetic docstring added by codeflux mutation."""\n'
+    doc = '    """Synthetic docstring added by fluxling mutation."""\n'
     return src[:head_end] + doc + src[head_end:], "Add docstring to first function"
 
 
@@ -50,7 +50,7 @@ def _insert_logging(src: str, rng: random.Random):
     m = re.search(r"^(def \w+\(.*\):\n)", src, re.M)
     if not m:
         return None
-    probe = '    print("[codeflux] mutation probe")\n'
+    probe = '    print("[fluxling] mutation probe")\n'
     return src[:m.end()] + probe + src[m.end():], "Insert logging probe in first function"
 
 
@@ -66,7 +66,7 @@ def _bump_constant(src: str, rng: random.Random):
 def _add_function(src: str, rng: random.Random):
     name = f"mutated_helper_{rng.randint(100, 999)}"
     add = (f"\n\ndef {name}():\n"
-           f'    """Synthetic helper added by codeflux mutation."""\n'
+           f'    """Synthetic helper added by fluxling mutation."""\n'
            f"    return {rng.randint(1, 99)}\n")
     return src.rstrip("\n") + "\n" + add, f"Add helper function {name}"
 

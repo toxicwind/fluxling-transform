@@ -1,14 +1,14 @@
 # AGENTS.md — fluxling-transform
 
 > Refines: `/home/toxic/AGENTS.md` (the estate control-plane). This file is
-> **living doctrine** for the codeflux family. It asserts "refines, never
+> **living doctrine** for the fluxling family. It asserts "refines, never
 > contradicts" the estate contract.
 
 ## Living code (2026-11-04, architect directive)
 
 **This product is "living code" — agents MAY modify, mutate, and add to it as
 they use it.** Patchling is a bounded code-transformation primitive, and the
-codeflux family (patchling, rig, code-racer) exists to be embedded, extended,
+fluxling family (patchling, rig, code-racer) exists to be embedded, extended,
 and raced. Do not treat it as frozen.
 
 - **Modify in place**: if a transformation, backend, or CLI surface is missing
@@ -23,7 +23,7 @@ and raced. Do not treat it as frozen.
   caller that imports `from patchling import ...`.
 - **No agent harness**: patchling stays a bounded primitive (files in, files
   out, no filesystem access, no agent loop). If you want an agent loop, that
-  belongs in codeflux-rig / the estate, not here.
+  belongs in fluxling-rig / the estate, not here.
 
 ## Build / test
 
