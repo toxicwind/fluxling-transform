@@ -168,3 +168,54 @@ export function buildEnvironment(files: Files, maxPerFile = 12000): string {
     .map(([name, content]) => `FILE ${name}:\n\`\`\`\n${content.slice(0, maxPerFile)}\n\`\`\``)
     .join("\n\n");
 }
+
+/**
+ * Generate a complete greenfield module from a spec (no existing file to diff).
+ * fluxling "living code" addition (2026-11-08): the estate's fix threads need
+ * brand-new modules (tool_trust.go, retry-classify.ts, capture, coverage-gate)
+ * that smartapply/generateDiff cannot produce because there is no original to
+ * diff against. This is the greenfield sibling of generateDiff: same chat lane,
+ * same extract-a-single-code-block contract, but the response IS the file.
+ *
+ * The prompt demands a single fenced code block (```lang ... ```) so the
+ * result is deterministic to extract; anything outside the fence is discarded.
+ */
+export async function generateModule(
+  spec: { language: string; path: string; purpose: string; contract: string; conventions?: string },
+  opts: LlmOptions = {},
+): Promise<string> {
+  const raw = await chat(
+    [
+      {
+        role: "system",
+        content:
+          "You write one complete, production-ready source file. No prose, no plan, no markdown outside the code fence. " +
+          "Respond with EXACTLY one fenced code block:\n```" +
+          spec.language +
+          "\n<entire file>\n```\n" +
+          "The file must be complete and compilable — never a stub, never a TODO, never a placeholder body.",
+      },
+      {
+        role: "user",
+        content: [
+          `FILE TO CREATE: ${spec.path}`,
+          `LANGUAGE: ${spec.language}`,
+          `PURPOSE: ${spec.purpose}`,
+          `CONTRACT (must implement exactly): ${spec.contract}`,
+          spec.conventions ? `CONVENTIONS: ${spec.conventions}` : null,
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      },
+    ],
+    opts,
+  );
+  return extractCodeBlock(raw);
+}
+
+/** Extract a single fenced code block from an LLM response. */
+export function extractCodeBlock(text: string): string {
+  const fence = text.match(/```[^\n]*\n([\s\S]*?)```/);
+  if (fence) return fence[1].trim();
+  return text.trim();
+}
