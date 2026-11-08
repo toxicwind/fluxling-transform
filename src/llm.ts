@@ -49,7 +49,7 @@ export async function chat(messages: Array<{ role: string; content: string }>, o
       model: `freeinference/${model}`,
       messages,
       temperature: opts.temperature ?? 1.0,
-      max_tokens: opts.maxTokens ?? 32000,
+      max_tokens: opts.maxTokens ?? 8000,
     }),
   });
   if (!res.ok) throw new Error(`router HTTP ${res.status}`);
