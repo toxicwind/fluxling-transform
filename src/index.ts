@@ -11,5 +11,6 @@ export * from "./applydiff.ts";
 export * from "./core.ts";
 export * from "./llm.ts";
 export * from "./mutate.ts";
+export * from "./toolchain.ts";
 export * from "./workflow.ts";
 export type { Files } from "./core.ts";
