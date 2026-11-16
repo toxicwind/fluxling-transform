@@ -1,7 +1,7 @@
 /**
  * fluxling-transform workflow — universal patch workflows (code-run-first).
  * Port of fluxling/workflows.py to Bun/TS, modularized. Fixes the original's
- * secretsmith key resolution to kryptos (estate SSOT).
+ * secretsmith key resolution to kryptos (Pens SSOT).
  */
 import { spawnSync } from "node:child_process";
 import type { Files } from "./core.ts";

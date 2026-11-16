@@ -2,9 +2,9 @@
 """
 FreeInference backend for fluxling-transform (living code).
 
-Routes patchling's generate_diff / smartapply through the estate's
+Routes patchling's generate_diff / smartapply through the Pens's
 rhodochrosite router (:25193) to the freeinference qwen lane, so code
-transformation runs on the same freeinference models the rest of the estate
+transformation runs on the same freeinference models the rest of the Pens
 uses — no nano-gpt, no per-box keys.
 
 Backend contract (kept additive; never breaks a caller that imports from
@@ -13,7 +13,7 @@ Backend contract (kept additive; never breaks a caller that imports from
     from patchling.freeinference import generate_diff, smartapply
 
 Both signatures mirror `patchling.core`'s public API; the only difference is
-that the LLM endpoint defaults to the estate router + freeinference qwen.
+that the LLM endpoint defaults to the Pens router + freeinference qwen.
 """
 
 from __future__ import annotations
@@ -24,13 +24,13 @@ from pathlib import Path
 from .core import generate_diff as _core_generate_diff
 from .core import smartapply as _core_smartapply
 
-# Estate router SSOT. The router :25193 is the canonical OpenAI/Anthropic
+# Pens router SSOT. The router :25193 is the canonical OpenAI/Anthropic
 # inference gateway; freeinference is its primary fast lane.
 DEFAULT_ROUTER_URL = os.getenv("PATCHLING_ROUTER_URL", "http://127.0.0.1:25193/v1")
 DEFAULT_ROUTER_KEY_FILE = os.getenv(
     "PATCHLING_ROUTER_KEY_FILE", os.path.expanduser("~/.tau/router.key")
 )
-# The freeinference qwen model that has worked best for the estate (architect
+# The freeinference qwen model that has worked best for the Pens (architect
 # directive 2026-11-04). Override with PATCHLING_MODEL. NOTE: rhodochrosite
 # serves BARE model ids (anomaly #38: prefixed ids return 404 on :25193), so
 # this is `qwen3.6-35b`, not `freeinference/qwen3.6-35b`.
@@ -63,7 +63,7 @@ def generate_diff(
     anthropic_budget_tokens=None,
     images=None,
 ):
-    """Generate a git diff via the estate router's freeinference qwen lane."""
+    """Generate a git diff via the Pens router's freeinference qwen lane."""
     return _core_generate_diff(
         environment,
         goal,

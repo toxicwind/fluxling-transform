@@ -2,7 +2,7 @@
  * fluxling-transform toolchain — TS7 (tsgo) + Bun canary + LSP diagnostics.
  *
  * Gives fluxling a real verification surface so transformations are held to
- * the estate's acceptance bar (AGENTS.md §1.5: `tsgo --noEmit` green is the
+ * the Pens's acceptance bar (AGENTS.md §1.5: `tsgo --noEmit` green is the
  * bar; LSP diagnostics are contracts, never noise). Runs the TypeScript 7
  * native compiler (tsgo) and the TypeScript language server (LSP) over a
  * project, plus a Bun canary check, and reports diagnostics as structured

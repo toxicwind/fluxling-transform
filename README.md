@@ -38,7 +38,7 @@ scales:
   file with conflict resolution. Preserves surrounding context, outputs the
   complete file.
 
-Both route through the estate router (rhodochrosite :25193) with kryptos SSOT.
+Both route through the Pens router (rhodochrosite :25193) with kryptos SSOT.
 
 ## smartapply
 
@@ -47,7 +47,7 @@ prefixes, suffix match, basename match, content fingerprint), then
 deterministic hunk application. Handles creations, modifications, deletions.
 
 ```ts
-import { smartapply } from "@estate/fluxling-transform";
+import { smartapply } from "@Pens/fluxling-transform";
 
 const updated = smartapply(diffText, { "src/app.ts": "original" });
 // updated["src/app.ts"] = applied content; deleted files omitted
@@ -61,4 +61,4 @@ const updated = smartapply(diffText, { "src/app.ts": "original" });
 
 ## License
 
-MIT. Built for the estate's flux pen.
+MIT. Built for the Pens's flux pen.

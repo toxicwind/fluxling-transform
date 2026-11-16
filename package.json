@@ -1,5 +1,5 @@
 {
-  "name": "@estate/fluxling-transform",
+  "name": "@Pens/fluxling-transform",
   "version": "0.1.0",
   "type": "module",
   "description": "fluxling-transform — Bun/TS modular port of the fluxling transform engine: smartapply (fuzzy diff application), applydiff (path-safe), agentic LLM layer (file + project prompts).",

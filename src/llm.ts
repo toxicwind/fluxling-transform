@@ -3,7 +3,7 @@
  *
  * Full Bun/TS port of the original's call_llm_for_diff / call_llm_for_apply,
  * with properly-engineered agentic prompts for BOTH single-file and whole
- * project transformations. Routes through the estate router (rhodochrosite
+ * project transformations. Routes through the Pens router (mimetite
  * :25193) with kryptos SSOT — no direct provider calls.
  */
 import type { Files } from "./core.ts";
@@ -17,13 +17,13 @@ export interface LlmOptions {
   maxTokens?: number;
 }
 
-/** Resolve the router key from env or kryptos keyring. */
+/** Resolve the router key from env or the kryptos SSOT (canonical: ESTATE_ROUTER_API_KEY). */
 export async function getKey(): Promise<string> {
-  const env = process.env.RHODOCHROSITE_API_KEY ?? process.env.FREEINFERENCE_API_KEY;
+  const env = process.env.ESTATE_ROUTER_API_KEY ?? process.env.FREEINFERENCE_API_KEY;
   if (env) return env;
   const { execFile } = await import("node:child_process");
   const value = await new Promise<string | undefined>((resolve) => {
-    execFile("kryptos", ["--json", "get", "RHODOCHROSITE_API_KEY", "--no-fuzzy"], { timeout: 8000 }, (err, stdout) => {
+    execFile("kryptos", ["--json", "get", "ESTATE_ROUTER_API_KEY", "--no-fuzzy"], { timeout: 8000 }, (err, stdout) => {
       if (err) return resolve(undefined);
       try {
         const parsed = JSON.parse(stdout);
@@ -34,19 +34,22 @@ export async function getKey(): Promise<string> {
       }
     });
   });
-  if (!value) throw new Error("fluxling-transform: no RHODOCHROSITE_API_KEY (env or kryptos)");
+  if (!value) throw new Error("fluxling-transform: no ESTATE_ROUTER_API_KEY (env or kryptos)");
   return value;
 }
 
 /** One chat-completion call through the router. */
 export async function chat(messages: Array<{ role: string; content: string }>, opts: LlmOptions = {}): Promise<string> {
   const key = opts.apiKey ?? (await getKey());
-  const model = opts.model ?? process.env.GPTDIFF_MODEL ?? "qwen3.6-35b";
+  const model = opts.model ?? process.env.GPTDIFF_MODEL ?? process.env.FLUXLING_MODEL ?? "deepseek-v4-flash";
   const res = await fetch(`${ROUTER_URL}/chat/completions`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
     body: JSON.stringify({
-      model: `freeinference/${model}`,
+      // The Pens router (:25193) refuses `freeinference/`-prefixed ids by
+      // design (router.ts: freeinference is restricted to tau/kappa direct
+      // lanes). Send the bare router-served model id instead.
+      model,
       messages,
       temperature: opts.temperature ?? 1.0,
       max_tokens: opts.maxTokens ?? 8000,
@@ -171,7 +174,7 @@ export function buildEnvironment(files: Files, maxPerFile = 12000): string {
 
 /**
  * Generate a complete greenfield module from a spec (no existing file to diff).
- * fluxling "living code" addition (2026-11-08): the estate's fix threads need
+ * fluxling "living code" addition (2026-11-08): the Pens's fix threads need
  * brand-new modules (tool_trust.go, retry-classify.ts, capture, coverage-gate)
  * that smartapply/generateDiff cannot produce because there is no original to
  * diff against. This is the greenfield sibling of generateDiff: same chat lane,

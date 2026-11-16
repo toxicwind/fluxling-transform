@@ -3,7 +3,7 @@
 // Scans pens/*/products/*, lists products missing package.json, then hands the
 // list to fluxling-transform (chat) to generate each manifest autonomously,
 // validating JSON before write. Deterministic fallback if the LLM lane is down.
-import { chat } from "@estate/fluxling-transform";
+import { chat } from "@Pens/fluxling-transform";
 import { readdirSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, basename } from "node:path";
 
@@ -53,7 +53,7 @@ function fallback(p: (typeof products)[0]): string {
       };
   return JSON.stringify(
     {
-      name: `@estate/${p.name}`,
+      name: `@Pens/${p.name}`,
       version: "0.1.0",
       private: true,
       type: "module",
@@ -75,7 +75,7 @@ for (const p of products) {
       {
         role: "user",
         content:
-          `Generate a COMPLETE package.json for this estate product (Bun/TypeScript unless Cargo.toml/go.mod/pyproject.toml present — then wrap the native toolchain). ` +
+          `Generate a COMPLETE package.json for this Pens product (Bun/TypeScript unless Cargo.toml/go.mod/pyproject.toml present — then wrap the native toolchain). ` +
           `For Bun products include the full script set: dev ("bun --hot run <entry>"), test ("bun test"), typecheck ("tsgo --noEmit -p tsconfig.json"), lint + fmt (biome), build (bun build), plus a "bin" map when bin/*.ts entrypoints exist, and devDependencies (@types/bun, bun-types, typescript, @biomejs/biome). ` +
           `Respond with ONLY the JSON, no fences.\n` +
           `dir entries: ${p.entries.join(", ")}\nREADME:\n${p.readme}`,
