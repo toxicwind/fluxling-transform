@@ -1,0 +1,1360 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://toxicwind.github.io/codeflux-patchling/api/">
+      
+      
+        <link rel="prev" href="../installation/">
+      
+      
+        <link rel="next" href="../cli/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>API Reference - Patchling</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#patchling-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+  <a href="https://pypi.org/project/patchling/" target="_blank" rel="noopener">PyPI</a>
+  — natural-language code transformation as a library and CLI
+  &nbsp;·&nbsp;
+  <a href="https://github.com/toxicwind/codeflux-patchling" target="_blank" rel="noopener">source</a>
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Patchling" class="md-header__button md-logo" aria-label="Patchling" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Patchling
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Patchling" class="md-nav__button md-logo" aria-label="Patchling" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Patchling
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        generate_diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smartapply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        smartapply
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication &amp; Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling &amp; Recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-case-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Case Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Use Cases
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patchling-apply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    patchling-apply
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agent Loops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basic Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Refactoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        generate_diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smartapply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        smartapply
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication &amp; Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling &amp; Recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-case-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Case Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Use Cases
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="patchling-api-reference">Patchling API Reference</h1>
+<blockquote>
+<p><strong>Patchling everywhere:</strong> this library also ships for browser and Node as <a href="https://github.com/255BITS/patchling">patchling</a> — see it running live in <a href="https://nanoodle.com">nanoodle.com</a>, a no-server visual AI workflow editor built on it.</p>
+</blockquote>
+<h2 id="core-functions">Core Functions</h2>
+<h3 id="generate_diff">generate_diff</h3>
+<pre><code class="language-python">def generate_diff(
+    environment: str,
+    goal: str,
+    model: str = os.getenv('GPTDIFF_MODEL', 'gemini-3-pro-preview'),
+    temperature: float = 0.7,
+    max_tokens: int = 32000,
+    prepend: Optional[str] = None,  # Path to file or URL whose content will be prepended to the system prompt
+    api_key: Optional[str] = None,  # Can also set via GPTDIFF_LLM_API_KEY env
+    base_url: Optional[str] = None,
+    images: Optional[List[str]] = None,  # List of image file paths encoded and sent with the prompt
+) -&gt; str
+</code></pre>
+<p><strong>Note:</strong> Built with the <a href="https://github.com/255BITS/ai-agent-toolbox">AI Agent Toolbox</a> for reliable tool parsing across models and frameworks</p>
+<p><strong>Transforms environments through natural language instructions</strong></p>
+<ul>
+<li><code>environment</code>: Multi-file codebase representation using <code>File: [path]</code> headers</li>
+<li><code>goal</code>: Natural language instruction for desired code changes</li>
+<li><code>images</code>: Optional list of image file paths to provide additional visual context (each image is base64-encoded and included in the request)</li>
+<li>Returns unified diff string sometimes compatible with smartapply</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from patchling import generate_diff, build_environment  # Uses AI Agent Toolbox for reliable parsing
+
+# Multi-file environment example
+files = {
+    &quot;main.py&quot;: &quot;def greet():\n    print('Hello World')&quot;,
+    &quot;tests/test_main.py&quot;: &quot;def test_greet():\n    pass&quot; 
+}
+env = build_environment(files)
+
+# Coordinated change across implementation and tests
+diff = generate_diff(env, 
+    &quot;Add return type hints and update tests to match&quot;
+)
+
+files = {&quot;main.py&quot;: &quot;def greet():\n    print('Hello World')&quot;}
+env = build_environment(files)
+diff = generate_diff(env, &quot;Translate greeting to Spanish&quot;)
+</code></pre>
+<p><em>Pro Tip:</em> Use <code>build_environment()</code> with file dictionaries for safer environment creation</p>
+<h3 id="smartapply">smartapply</h3>
+<pre><code class="language-python">def smartapply(  # AI-powered patch resolver
+    diff_text: str,
+    files: Dict[str, str],
+    model: str = 'gpt5-mini',  # Fast and reliable for applying diffs
+    api_key: Optional[str] = None,
+    base_url: Optional[str] = None
+) -&gt; Dict[str, str]
+</code></pre>
+<p><strong>Applies diffs with AI-powered conflict resolution</strong>
+- <em>Safe</em>: Preserves file encoding and line endings
+- <em>Robust</em>: Handles ambiguous hunks through context-aware reconciliation
+- Uses LLM to preserve context around changes
+- Handles new file creation and complex patches</p>
+<ul>
+<li><code>diff_text</code>: Unified diff generated by <code>generate_diff</code></li>
+<li><code>files</code>: Dictionary of {file_path: content} to modify</li>
+<li>Returns updated file dictionary with changes applied</li>
+</ul>
+<p><strong>Implementation Notes:</strong>
+- Uses per-file processing with concurrent execution
+- Maintains original file encodings and line endings
+- Handles ambiguous hunks through LLM-powered reconciliation</p>
+<p><strong>Basic Example:</strong></p>
+<pre><code class="language-python">original_files = {&quot;main.py&quot;: &quot;def greet():\n    print('Hello World')&quot;}
+updated_files = smartapply(diff, original_files)  # Returns new dict
+</code></pre>
+<p><strong>Advanced Example (Multi-file Modification):</strong></p>
+<pre><code class="language-python">original_files = {
+    &quot;file1.py&quot;: &quot;def func1():\n    print('Old func1')&quot;,
+    &quot;file2.py&quot;: &quot;def func2():\n    print('Old func2')&quot;,
+    &quot;unrelated.py&quot;: &quot;def unrelated():\n    pass&quot;
+}
+
+diff = '''diff --git a/file1.py b/file1.py
+--- a/file1.py
++++ b/file1.py
+@@ -1,2 +1,2 @@
+ def func1():
+-    print(&quot;Old func1&quot;)
++    print(&quot;New func1&quot;)
+diff --git a/file2.py b/file2.py
+--- a/file2.py
++++ b/file2.py
+@@ -1,2 +1,2 @@
+ def func2():
+-    print(&quot;Old func2&quot;)
++    print(&quot;New func2&quot;)'''
+
+updated_files = smartapply(diff, original_files)
+
+print(updated_files[&quot;file1.py&quot;])  # Contains 'print(&quot;New func1&quot;)'
+print(updated_files[&quot;file2.py&quot;])  # Contains 'print(&quot;New func2&quot;)'
+print(updated_files[&quot;unrelated.py&quot;])  # Remains unchanged
+</code></pre>
+<p><strong>Real-World Refactor Example:</strong></p>
+<pre><code class="language-python"># Coordinated database schema and ORM update
+original_files = {
+    &quot;models.py&quot;: &quot;class User:\n    name = CharField()&quot;,
+    &quot;migrations/0001_initial.py&quot;: &quot;# Existing migration&quot;,
+    &quot;tests/test_models.py&quot;: &quot;def test_user_creation():\n    User(name='Test').save()&quot;
+}
+
+diff = generate_diff(
+    build_environment(original_files),
+    &quot;Rename 'name' field to 'username' across all layers&quot;
+)
+
+updated_files = smartapply(diff, original_files)
+</code></pre>
+<p><strong>Conflict Resolution &amp; Error Handling:</strong></p>
+<pre><code class="language-python">from openai import APIError
+from patchling import parse_environment
+
+diff = '''diff --git a/core.py b/core.py
+@@ -10,3 +10,3 @@
++-def old_name():  # Existing line being removed
+++def new_name():'''
+
+try:
+    smartapply(diff, {&quot;core.py&quot;: &quot;def old_name():\n    pass&quot;}) 
+except APIError as e:  # Built-in error handling
+    updated = smartapply(diff, files, model='gemini-2.0-flash')  # Retry
+</code></pre>
+<h2 id="authentication-configuration">Authentication &amp; Configuration</h2>
+<pre><code class="language-python"># Option 1: Environment variables
+import os  # Recommended for CLI usage
+os.environ['GPTDIFF_LLM_API_KEY'] = 'key_123'
+os.environ['GPTDIFF_LLM_BASE_URL'] = 'https://api.example.com/v1'
+
+# Option 2: Direct parameters  # Preferred for library use
+# Direct parameters override environment variables
+
+generate_diff(
+    environment=env,
+    goal=instruction,
+    api_key='key_123',
+    base_url='https://api.example.com/v1'
+)
+</code></pre>
+<h2 id="error-handling-recovery">Error Handling &amp; Recovery</h2>
+<pre><code class="language-python">from openai import APIError, AuthenticationError
+
+try:
+    diff = generate_diff(environment, &quot;Modernize error handling&quot;)
+    updated = smartapply(diff, files)
+except AuthenticationError as e:
+    print(f&quot;Invalid credentials: {e.user_message}&quot;)
+except APIError as e:
+    print(f&quot;API failure: {e.message}&quot;)
+    if e.status_code == 429:
+        print(&quot;Rate limit exceeded - add delay&quot;)
+except Exception as e:
+    print(f&quot;Unexpected error: {str(e)}&quot;)
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Environment Formatting</strong>:
+   <code>python
+   from patchling import build_environment
+   env = build_environment(files_dict)  # Safely handles edge cases</code></p>
+</li>
+<li>
+<p><strong>Model Selection</strong>:</p>
+</li>
+<li><code>gemini-3-pro-preview</code>: Recommended default for generating diffs</li>
+<li><code>gpt5-mini</code>: Recommended for smartapply (fast and reliable)</li>
+<li><code>gemini-2.0-flash</code>: Fastest for simple text modifications</li>
+</ol>
+<h2 id="edge-case-handling">Edge Case Handling</h2>
+<p><strong>New File Creation:</strong></p>
+<pre><code class="language-python"># smartapply automatically creates missing files
+diff = '''diff --git a/new.py b/new.py
+@@ -0,0 +1,2 @@
++def initialize():
++    print(&quot;New module&quot;)'''  # Correct diff syntax
+
+assert 'new.py' in smartapply(diff, {})
+</code></pre>
+<p><strong>Modified File Validation:</strong></p>
+<pre><code class="language-python"># Maintains surrounding context during patching
+original = {&quot;utils.py&quot;: &quot;def calc():\n    return 42&quot;}
+diff = '''diff --git a/utils.py b/utils.py
+@@ -1,2 +1,2 @@
++-def calc():
+++def calculate():
++     return 42'''
+
+updated = smartapply(diff, original)
+assert &quot;calculate()&quot; in updated[&quot;utils.py&quot;]
+</code></pre>
+<p><strong>File Deletion Handling:</strong></p>
+<pre><code class="language-python">diff = '''diff --git a/old.py b/old.py
+deleted file mode 100644
+--- a/old.py
+++++ /dev/null
+@@ -1,3 +0,0 @@
++-def deprecated():
++-    print(&quot;Remove me&quot;)'''
+
+# smartapply will remove file from returned dictionary
+original = {&quot;old.py&quot;: &quot;def deprecated():\n    print('Remove me')&quot;}
+updated = smartapply(diff, original)
+assert &quot;old.py&quot; not in updated
+
+# Verify unrelated files preserved
+assert all(f not in updated for f in [&quot;utils.py&quot;, &quot;config.ini&quot;])
+</code></pre>
+<p><em>Note:</em> Deleted files are omitted from the returned dictionary</p>
+<p><strong>Edge Case Handling:</strong>
+- New files are created with proper directory structure
+- Binary files are automatically skipped</p>
+<h2 id="advanced-use-cases">Advanced Use Cases</h2>
+<p><strong>Coordinated Multi-File Refactor:</strong></p>
+<pre><code class="language-python">original_files = {
+    &quot;api.py&quot;: &quot;def old_name(): pass&quot;,
+    &quot;test_api.py&quot;: &quot;def test_old_name(): pass&quot;
+}
+
+diff = generate_diff(build_environment(original_files), &quot;Rename old_name to new_name everywhere&quot;)
+updated_files = smartapply(diff, original_files)
+</code></pre>
+<p><strong>Batch Processing Pipeline:</strong></p>
+<pre><code class="language-python">from patchling import parse_environment, build_environment
+
+# Process multiple transformations sequentially
+files = load_project_files()  # Your custom loader
+env = build_environment(files)
+
+for task in [&quot;Add type hints&quot;, &quot;Convert to f-strings&quot;]:
+    diff = generate_diff(env, task)
+    files = smartapply(diff, files)
+    env = build_environment(files)  # Refresh environment
+
+save_files(files)  # Your custom saver
+</code></pre>
+<p><strong>Agent Loop Integration:</strong></p>
+<pre><code class="language-python">import time
+from patchling import generate_diff, smartapply, build_environment
+
+def improvement_loop(files, goal, cycles=None):
+    &quot;&quot;&quot;Run Patchling continuously until stopped or cycle limit reached.&quot;&quot;&quot;
+    count = 0
+    while cycles is None or count &lt; cycles:
+        env = build_environment(files)
+        diff = generate_diff(env, goal)
+        if diff.strip():
+            files = smartapply(diff, files)
+            count += 1
+            print(f&quot;Cycle {count}: Applied improvements&quot;)
+        time.sleep(5)
+    return files
+
+# Example: Continuously improve test coverage
+files = load_project_files()
+files = improvement_loop(files, &quot;Add missing test cases for edge conditions&quot;, cycles=10)
+save_files(files)
+</code></pre>
+<p><strong>Why Agent Loops Deliver ROI:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Manual Approach</th>
+<th>Agent Loop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test coverage expansion</td>
+<td>Hours of developer time</td>
+<td>Runs overnight, 10+ test cases added</td>
+</tr>
+<tr>
+<td>Security vulnerability fixes</td>
+<td>Expensive audit + remediation</td>
+<td>Continuous scanning and patching</td>
+</tr>
+<tr>
+<td>Tech debt reduction</td>
+<td>Never prioritized</td>
+<td>Measurable complexity reduction per cycle</td>
+</tr>
+</tbody>
+</table>
+<p>Agent loops transform Patchling from a productivity tool into an autonomous code improvement system.</p>
+<p>See <a href="../examples/automation/">Agent Loops</a> for battle-tested patterns and bash recipes.</p>
+<p>For the smartapply feature, you can set separate variables:
+ - <code>GPTDIFF_SMARTAPPLY_MODEL</code>: Model for smartapply (recommended: <code>gpt5-mini</code>, fast and reliable for applying diffs; defaults to <code>GPTDIFF_MODEL</code> if not set)
+ - <code>GPTDIFF_SMARTAPPLY_API_KEY</code>: API key for smartapply (defaults to <code>GPTDIFF_LLM_API_KEY</code> if not set)
+ - <code>GPTDIFF_SMARTAPPLY_BASE_URL</code>: Base URL for smartapply (defaults to <code>GPTDIFF_LLM_BASE_URL</code> if not set)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://pypi.org/project/patchling/" target="_blank" rel="noopener" title="PyPI" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/toxicwind/codeflux-patchling" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,97 @@
+Metadata-Version: 2.4
+Name: fluxling
+Version: 0.9.0
+Summary: Natural-language code transformation as a library: generate unified diffs with LLMs and apply them resiliently with smartapply. Formerly gptdiff, then patchling.
+Home-page: https://github.com/toxicwind/fluxling
+Author: 255labs
+Project-URL: Documentation, https://toxicwind.github.io/fluxling
+Project-URL: Source, https://github.com/toxicwind/fluxling
+Project-URL: Upstream (patchling-py), https://github.com/255BITS/patchling-py
+Project-URL: Browser/Node runtime (npm), https://www.npmjs.com/package/patchling
+Project-URL: Built with fluxling (nanoodle), https://nanoodle.com
+Keywords: fluxling,patchling,smartapply,llm,diff,unified-diff,patch,code-transformation,ai,codegen,gptdiff,codeflux
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: openai>=1.0.0
+Requires-Dist: tiktoken>=0.5.0
+Requires-Dist: ai-agent-toolbox<1.0,>=0.2.0
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-mock; extra == "test"
+Provides-Extra: docs
+Requires-Dist: mkdocs; extra == "docs"
+Requires-Dist: mkdocs-material; extra == "docs"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: summary
+
+# codeflux-patchling
+
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE) [![GitHub stars](https://img.shields.io/github/stars/toxicwind/codeflux-patchling?style=for-the-badge)](https://github.com/toxicwind/codeflux-patchling) [![GitHub issues](https://img.shields.io/github/issues/toxicwind/codeflux-patchling?style=for-the-badge)](https://github.com/toxicwind/codeflux-patchling/issues)
+
+</div>
+
+---
+
+## codeflux-patchling — a focused, dependency-free tool for the task it solves.
+
+<p align="center">
+  <a href="docs/">Explore the docs »</a> ·
+  <a href="https://github.com/toxicwind/codeflux-patchling/issues/new?labels=bug">Report Bug</a> ·
+  <a href="https://github.com/toxicwind/codeflux-patchling/issues/new?labels=enhancement">Request Feature</a>
+</p>
+
+## Features
+
+
+## Getting Started
+
+### Prerequisites
+
+- Bun >= 1.1 (or the runtime your package targets)
+
+### Install
+
+```bash
+pip install -e .
+```
+
+## Usage
+
+See [docs/](docs/) for the full API.
+
+## Roadmap
+
+- [x] First release
+- [ ] Community contributions welcome
+
+See the [open issues](https://github.com/toxicwind/codeflux-patchling/issues) for full roadmap and proposed features.
+
+## Contributing
+
+Contributions are what make the open-source community such an amazing place — read [CONTRIBUTING.md](CONTRIBUTING.md) and jump in.
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+## Contact & Acknowledgments
+
+Maintainer: @toxicwind — open a [discussion](https://github.com/toxicwind/codeflux-patchling/issues).
+
+---
+
+> Don't forget to give the project a star! ⭐ Thanks again!

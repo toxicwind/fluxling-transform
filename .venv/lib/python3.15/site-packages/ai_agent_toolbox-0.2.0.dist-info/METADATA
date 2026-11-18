@@ -1,0 +1,368 @@
+Metadata-Version: 2.4
+Name: ai-agent-toolbox
+Version: 0.2.0
+Summary: An easy to use framework for adding tool use to AI agents.
+Author-email: "255labs.xyz" <martyn@255bits.com>
+License: MIT License
+        
+        Copyright (c) [year] [fullname]
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/255BITS/ai-agent-toolbox
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+
+# AI Agent Toolbox
+
+<figure>
+  <img src="https://raw.githubusercontent.com/255BITS/ai-agent-toolbox/main/docs/ai-agent-toolbox-logo.jpg" alt="AI Agent Toolbox Logo" width="300">
+</figure>
+
+AI Agent Toolbox makes AI tool usage across models and frameworks easy. For use with parsing single responses or in agent loops and workflow.
+
+AI Agent Toolbox is meant to be stable, reliable, and easy to master.
+
+## Features
+
+* Model provider-agnostic - supports Anthropic, OpenAI, Groq, NEAR AI, Ollama, Hyperbolic, NanoGPT, and more
+* Framework compatible - usable in anthropic-sdk-python, openai-python, ell, LangChain, etc
+* Supports protocols such as Anthropic Model Context Protocol(MCP)
+* Robust parsing (XML, JSON, Markdown)
+* Streaming support
+* Support for read-write tools (feedback) as well as write-only tools
+
+## Documentation
+
+See the full documentation at [toolbox.255labs.xyz](https://toolbox.255labs.xyz/)
+
+## Installation
+
+```bash
+pip install ai-agent-toolbox
+```
+
+## Examples
+
+See our [examples folder](https://github.com/255BITS/ai-agent-toolbox/tree/main/examples) for:
+- Simple tool usage
+- Streaming integration
+- JSON tool parsing (complete and streaming payloads)
+- Read-write tools with feedback loops
+- Agent workflow examples
+
+## Usage
+
+### Synchronous (Complete Response)
+
+To parse a fully formed response:
+
+```python
+from ai_agent_toolbox import Toolbox, XMLParser, XMLPromptFormatter
+from examples.util import anthropic_llm_call
+
+# Setup
+toolbox = Toolbox()
+parser = XMLParser(tag="use_tool")
+formatter = XMLPromptFormatter(tag="use_tool")
+
+# Add tools to your toolbox
+def thinking(thoughts=""):
+    print("I'm thinking:", thoughts)
+
+toolbox.add_tool(
+    name="thinking",
+    fn=thinking,
+    args={
+        "thoughts": {
+            "type": "string",
+            "description": "Anything you want to think about"
+        }
+    },
+    description="For thinking out loud"
+)
+
+system = "You are a thinking AI. You have interesting thoughts.\n"
+prompt = "Think about something interesting."
+
+# Add instructions on using the available tools to the AI system prompt
+system += formatter.usage_prompt(toolbox)
+
+response = anthropic_llm_call(system_prompt=system, prompt=prompt)
+events = parser.parse(response)
+
+for event in events:
+    toolbox.use(event)
+```
+
+### Structured arguments and validation
+
+Tool schemas can describe composite inputs (lists, dicts, enums) and enforce
+validation constraints. The toolbox automatically parses JSON strings emitted by
+models and applies optional custom parsers before validation.
+
+```python
+import json
+from dataclasses import dataclass
+
+from ai_agent_toolbox import Toolbox
+from ai_agent_toolbox.parser_event import ParserEvent
+from ai_agent_toolbox.tool_use import ToolUse
+
+
+@dataclass
+class Task:
+    title: str
+    estimate_hours: int
+
+
+def pick_next_task(tasks, metadata, priority, limit):
+    ranked = sorted(tasks, key=lambda task: task.estimate_hours)[:limit]
+    return {
+        "next_task": ranked[0].title,
+        "tasks_considered": [task.title for task in ranked],
+        "metadata": metadata,
+        "priority": priority,
+    }
+
+
+toolbox = Toolbox()
+toolbox.add_tool(
+    name="pick_next_task",
+    fn=pick_next_task,
+    args={
+        "tasks": {
+            "type": "list",
+            "parser": lambda payload: [Task(**task) for task in payload],
+        },
+        "metadata": {"type": "dict"},
+        "priority": {"type": "enum", "choices": ["low", "medium", "high"]},
+        "limit": {"type": "int", "min": 1, "max": 5},
+    },
+    description="Choose the next task to execute",
+)
+
+event = ParserEvent(
+    type="tool",
+    mode="close",
+    id="tasks-1",
+    tool=ToolUse(
+        name="pick_next_task",
+        args={
+            "tasks": json.dumps(
+                [
+                    {"title": "Write docs", "estimate_hours": 2},
+                    {"title": "Ship release", "estimate_hours": 1},
+                ]
+            ),
+            "metadata": json.dumps({"owner": "core-team"}),
+            "priority": "high",
+            "limit": "2",
+        },
+    ),
+    is_tool_call=True,
+)
+
+response = toolbox.use(event)
+print(response.result)
+# {
+#   'tasks': [Task(title='Write docs', estimate_hours=2), ...],
+#   'metadata': {'owner': 'core-team'},
+#   'priority': 'high',
+#   'limit': 2,
+#   'next_task': 'Ship release',
+#   'tasks_considered': ['Ship release', 'Write docs']
+# }
+```
+
+### Asynchronous (Streaming)
+
+If you want to parse LLM responses as they come in:
+
+```python
+import asyncio
+from ai_agent_toolbox import Toolbox, XMLParser, XMLPromptFormatter
+from examples.util import anthropic_stream
+
+async def main():
+    # Initialize components
+    toolbox = Toolbox()
+    parser = XMLParser(tag="tool")
+    formatter = XMLPromptFormatter(tag="tool")
+    
+    # Register tools (add your actual tools here)
+    toolbox.add_tool(
+        name="search",
+        fn=lambda query: f"Results for {query}",
+        args={"query": {"type": "string"}},
+        description="Web search tool"
+    )
+    # Set up the system and user prompt
+    system = "You are a search agent.\n"
+
+    # Add tool usage instructions
+    system += formatter.usage_prompt(toolbox)
+    prompt = "Search for ..."
+
+    # Simulated streaming response from LLM
+    async for chunk in anthropic_stream(system=system, prompt=prompt, ...):
+        # Parse each chunk as it arrives
+        for event in parser.parse_chunk(chunk):
+            if event.is_tool_call:
+                print(f"Executing tool: {event.tool.name}")
+                await toolbox.use_async(event)  # Handle async tools
+
+    # Call this at the end of output to handle any unclosed or invalid LLM outputs
+    for event in parser.flush():
+        if event.is_tool_call:
+            print(f"Executing tool: {event.tool.name}")
+            await toolbox.use_async(event)  # Handle async tools
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+
+### JSON Tool Calls
+
+Many providers (OpenAI, Anthropic, Groq, etc.) stream tool usage as JSON objects. The toolbox ships with a matching parser and
+prompt formatter so you can keep the same agent loop regardless of provider.
+
+```python
+from ai_agent_toolbox import Toolbox, JSONParser, JSONPromptFormatter
+
+toolbox = Toolbox()
+parser = JSONParser()
+formatter = JSONPromptFormatter()
+
+toolbox.add_tool(
+    name="search",
+    fn=lambda query: f"Results for {query}",
+    args={"query": {"type": "string", "description": "Search keywords"}},
+    description="Web search tool",
+)
+
+system = "You are a JSON-native assistant.\n"
+system += formatter.usage_prompt(toolbox)
+
+# One-shot JSON payloads
+response_payload = provider_call(...)
+for event in parser.parse(response_payload):
+    if event.is_tool_call:
+        toolbox.use(event)
+
+# Streaming Server Sent Events (SSE)
+for chunk in provider_stream(...):
+    for event in parser.parse_chunk(chunk):
+        if event.is_tool_call:
+            toolbox.use(event)
+for event in parser.flush():
+    if event.is_tool_call:
+        toolbox.use(event)
+```
+
+
+
+### Local Tooling
+
+This supports other providers and open source models. Here you parse the results yourself.
+
+### Retrieval and read-write tools
+
+Some tools, such as search, may want to give the AI information for further action. This involves crafting a new prompt to the LLM includes any tool responses. We make this easy.
+
+```python 
+from ai_agent_toolbox import ToolResponse
+
+def search_tool(query: str):
+    return f"Results for {query}"
+
+# In your agent loop:
+responses = [r.result for r in tool_responses if r.result]
+new_prompt = f"Previous tool outputs:\n{'\n'.join(responses)}\n{original_prompt}"
+
+# Execute next LLM call with enriched prompt
+next_response = llm_call(
+    system_prompt=system,
+    prompt=new_prompt
+)
+# Continue processing...
+
+```
+
+## Running Tests
+
+Streaming parsers in this project are validated against golden event traces so
+refactors keep their streaming semantics intact. Before opening a pull request,
+run the parser regression suite:
+
+```bash
+pytest tests/**/*.py
+```
+
+You can also execute the entire test suite with `pytest tests` to include any
+additional checks.
+
+## Benefits
+
+| Feature/Capability          | AI Agent Toolbox ✅ | Naive Regex ❌ | Standard XML Parsers ❌ |
+|-----------------------------|---------------------|----------------|-------------------------|
+| **Streaming Support**        | ✅ Chunk-by-chunk processing | ❌ Full text required | ❌ DOM-based requires full document |
+| **Nested HTML/React**        | ✅ Handles JSX-like fragments | ❌ Fails on nesting | ❌ Requires strict hierarchy |
+| **Flexible Tool Format**     | ✅ Supports multiple tool use formats | ❌ Brittle pattern matching | ❌ Requires schema validation |
+| **Automatic Type Conversion**| ✅ String→int/float/bool | ❌ Manual casting needed | ❌ Returns only strings |
+| **Error Recovery**           | ✅ Heals partial/malformed tags | ❌ Fails on first mismatch | ❌ Aborts on validation errors |
+| **Battle Tested**            | ✅ Heavily tested | ❌ Ad-hoc testing | ❌ Generic XML cases only |
+| **Tool Schema Enforcement**  | ✅ Args + types validation | ❌ No validation | ❌ Only structural validation |
+| **Mixed Content Handling**   | ✅ Text + tools interleaved | ❌ Captures block text | ❌ Text nodes require special handling |
+| **Async Ready**              | ✅ Native async/sync support | ❌ Callback hell | ❌ Sync-only typically |
+| **Memory Safety**            | ✅ Guardrails against OOM | ❌ Unbounded buffers | ❌ DOM explosion risk |
+| **LLM Output Optimized**     | ✅ Tolerates unclosed tags | ❌ Fails on partials | ❌ Strict tag matching |
+| **Tool Feedback Loops**      | ✅ ToolResponse chaining | ❌ Manual stitching | ❌ No built-in concept |
+
+## Agent loops
+
+Workflows and agent loops involve multiple calls to a LLM provider.
+
+## Tips
+
+* Keep the system prompt the same across invocations when using multiple LLM calls
+* Stream when necessary, for example when a user is waiting for output
+* Native provider tooling can be used with local parsing
+* Start simple and expand. You can test with static strings to ensure your tools are working correctly.
+
+## Ecosystem
+### Used by
+* [https://github.com/255BITS/ai-agent-examples](https://github.com/255BITS/ai-agent-examples) - A repository of examples of agentic workflows
+* [https://github.com/255BITS/gptdiff](https://github.com/255BITS/gptdiff) - CLI and API to automatically create diffs and apply them
+* [https://github.com/255BITS/filecannon](https://github.com/255BITS/filecannon) - CLI to generate files with AI
+* [https://github.com/255BITS/appcannon](https://github.com/255BITS/appcannon) - A universal app generator for generating entire projects using AI
+
+## License
+
+MIT
+
+## Credits
+
+AI Agent Toolbox is created and maintained by <a href="255labs.xyz">255labs.xyz</a>

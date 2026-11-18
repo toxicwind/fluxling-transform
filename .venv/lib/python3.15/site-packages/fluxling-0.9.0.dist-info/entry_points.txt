@@ -1,0 +1,9 @@
+[console_scripts]
+fluxling = fluxling.core:main
+fluxling-apply = fluxling.gptpatch:main
+fluxling-workflow = fluxling.workflows:main
+gptdiff = fluxling.core:main
+gptpatch = fluxling.gptpatch:main
+patchling = fluxling.core:main
+patchling-apply = fluxling.gptpatch:main
+patchling-workflow = fluxling.workflows:main

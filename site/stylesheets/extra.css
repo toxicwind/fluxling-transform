@@ -1,0 +1,87 @@
+/* Patchling landing — custom hero + cards (mobile-first) */
+
+.md-typeset .pl-hero {
+  padding: 2.2rem 0 1.4rem;
+  text-align: left;
+}
+.md-typeset .pl-hero h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+  font-weight: 800;
+}
+.md-typeset .pl-hero em {
+  color: var(--md-primary-fg-color);
+  font-style: normal;
+  background: linear-gradient(90deg, #b388ff, #82b1ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.md-typeset .pl-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 0.4rem;
+}
+.md-typeset .pl-sub {
+  font-size: 1.02rem;
+  opacity: 0.85;
+  max-width: 42rem;
+}
+.md-typeset .pl-cta { margin-top: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.md-typeset .pl-btn {
+  display: inline-block;
+  padding: 0.55rem 1.2rem;
+  border-radius: 0.45rem;
+  background: var(--md-primary-fg-color);
+  color: #fff !important;
+  font-weight: 600;
+}
+.md-typeset .pl-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  color: inherit !important;
+  font-weight: 500;
+}
+
+.md-typeset .pl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.8rem;
+  margin: 1.4rem 0;
+}
+.md-typeset .pl-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.6rem;
+  padding: 1rem 1.1rem;
+  background: var(--md-default-bg-color);
+}
+.md-typeset .pl-card h3 { margin: 0 0 0.4rem; font-size: 0.95rem; }
+.md-typeset .pl-card p { margin: 0; font-size: 0.82rem; opacity: 0.85; }
+
+.md-typeset .pl-fork {
+  margin-top: 2rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  padding-top: 1.4rem;
+}
+.md-typeset .pl-fork h2 { font-size: 1.3rem; }
+.md-typeset .pl-table { font-size: 0.82rem; }
+.md-typeset .pl-table th {
+  background: var(--md-primary-fg-color--dark, #4527a0);
+  color: #fff;
+}
+
+@media screen and (max-width: 44rem) {
+  .md-typeset .pl-hero h1 { font-size: 1.55rem; }
+  .md-typeset .pl-hero { padding-top: 1.4rem; }
+}
+
+.md-typeset .pl-credit {
+  margin-top: 2.4rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--md-primary-fg-color);
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
